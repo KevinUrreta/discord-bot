@@ -1,6 +1,8 @@
 import asyncio
 
 from src.app.client import Client
+import src.core.logging # noqa
+from src.core.config import Settings
 
 
 async def main():

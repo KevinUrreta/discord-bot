@@ -9,3 +9,4 @@ class Settings(BaseSettings):
         case_sensitive=False
     )
     discord_token: SecretStr
+    log_file: str = "./logs/discord.log"
