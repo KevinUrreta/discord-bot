@@ -1,16 +1,18 @@
-# This is a sample Python script.
+import asyncio
 
-# Press Ctrl+F5 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press F9 to toggle the breakpoint.
+from src.app.client import Client
 
 
-# Press the green button in the gutter to run the script.
+async def main():
+    settings = Settings()
+    try:
+        async with Client() as client:
+            await client.start(settings.discord_token.get_secret_value())
+    finally:
+        await client.close()
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        pass
