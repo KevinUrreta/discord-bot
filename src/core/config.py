@@ -9,4 +9,10 @@ class Settings(BaseSettings):
         case_sensitive=False
     )
     discord_token: SecretStr
+
     log_file: str = "./logs/discord.log"
+
+    lavalink_host: str
+    lavalink_password: str
+    lavalink_port: str
+    lavalink_opus: str

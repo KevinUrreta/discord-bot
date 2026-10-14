@@ -33,3 +33,5 @@ root.setLevel(logging.INFO)
 if not root.handlers:
     root.addHandler(cli)
     root.addHandler(file)
+
+logger = logging.getLogger("discord")
