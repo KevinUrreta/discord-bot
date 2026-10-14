@@ -4,3 +4,7 @@ davey
 pydantic
 pydantic-settings
 wavelink
+
+sqlalchemy
+greenlet
+asyncpg
