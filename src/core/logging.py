@@ -20,13 +20,6 @@ file = logging.FileHandler(path, encoding="utf-8")
 file.setLevel(logging.INFO)
 file.setFormatter(formatter)
 
-discord = logging.getLogger("discord")
-discord.setLevel(logging.INFO)
-
-if not discord.handlers:
-    discord.addHandler(cli)
-    discord.addHandler(file)
-
 root = logging.getLogger()
 root.setLevel(logging.INFO)
 
@@ -34,4 +27,8 @@ if not root.handlers:
     root.addHandler(cli)
     root.addHandler(file)
 
-logger = logging.getLogger("discord")
+discord = logging.getLogger("discord")
+discord.setLevel(logging.INFO)
+discord.propagate = True
+
+logger = logging.getLogger()
