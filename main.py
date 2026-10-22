@@ -7,11 +7,11 @@ from src.core.config import Settings
 
 async def main():
     settings = Settings()
-    try:
-        async with Client() as client:
+    async with Client() as client:
+        try:
             await client.start(settings.discord_token.get_secret_value())
-    finally:
-        await client.close()
+        finally:
+            await client.close()
 
 
 if __name__ == '__main__':
