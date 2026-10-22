@@ -1,8 +1,10 @@
+import logging
+
 import wavelink
 
 from src.core.config import Settings
-from src.core.logging import logger
 
+logger = logging.getLogger("discord")
 
 class Lavalink:
 
