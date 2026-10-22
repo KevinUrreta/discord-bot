@@ -1,57 +1,38 @@
+from collections.abc import AsyncIterator, Awaitable, Callable
 from contextlib import asynccontextmanager
-from typing import AsyncGenerator, Optional
+from functools import wraps
+from typing import Any, ParamSpec, TypeVar
 
-from sqlalchemy.ext.asyncio import (
-    AsyncEngine,
-    AsyncSession,
-    async_sessionmaker,
-    create_async_engine,
-)
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+from sqlalchemy.orm import DeclarativeBase
 
-from src.infrastructure.database.base import Base
+F = TypeVar("F", bound=Callable[..., Awaitable[Any]])
+P = ParamSpec("P")
+R = TypeVar("R")
+
+
+def with_session(func: Callable[..., Awaitable[R]]) -> Callable[..., Awaitable[R]]:
+    @wraps(func)
+    async def wrapper(self: Any, *args: Any, **kwargs: Any) -> R:
+        async with self._db.get_session() as session:
+            return await func(self, *args, **kwargs, session=session)
+
+    return wrapper
+
+
+class Base(DeclarativeBase):
+    """Clase base declarativa para todos los modelos ORM de la base de datos."""
+    pass
 
 
 class Database:
-    def __init__(self, dsn: str, echo: bool = False) -> None:
-        self._dsn = dsn
-        self._echo = echo
-        self._engine: Optional[AsyncEngine] = None
-        self._session_factory: Optional[async_sessionmaker[AsyncSession]] = None
-
-    async def connect(self) -> None:
-        if self._engine is None:
-            self._engine = create_async_engine(
-                self._dsn,
-                echo=self._echo,
-                future=True,
-            )
-            self._session_factory = async_sessionmaker(
-                bind=self._engine,
-                class_=AsyncSession,
-                expire_on_commit=False,
-            )
-
-    async def close(self) -> None:
-        if self._engine is not None:
-            await self._engine.dispose()
-            self._engine = None
-            self._session_factory = None
-
-    async def create_tables(self) -> None:
-        if self._engine is None:
-            raise RuntimeError("Database is not connected")
-
-        async with self._engine.begin() as conn:
-            await conn.run_sync(
-                lambda sync_conn: Base.metadata.create_all(bind=sync_conn)
-            )
+    def __init__(self, url: str) -> None:
+        self.engine = create_async_engine(url, pool_pre_ping=True)
+        self.session_maker = async_sessionmaker(self.engine, expire_on_commit=False)
 
     @asynccontextmanager
-    async def get_session(self) -> AsyncGenerator[AsyncSession, None]:
-        if self._session_factory is None:
-            raise RuntimeError("Database is not connected")
-
-        async with self._session_factory() as session:
+    async def get_session(self) -> AsyncIterator[AsyncSession]:
+        async with self.session_maker() as session:
             try:
                 yield session
                 await session.commit()
@@ -60,3 +41,14 @@ class Database:
                 raise
             finally:
                 await session.close()
+
+    async def create_tables(self):
+        try:
+            from src.infrastructure.database.models import GuildModel, GuildSettingsModel, UserModel, MemberModel
+            async with self.engine.begin() as connection:
+                await connection.run_sync(lambda sync_conn: Base.metadata.create_all(bind=sync_conn))
+        except Exception:
+            raise
+
+    async def close(self) -> None:
+        await self.engine.dispose()

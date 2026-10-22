@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 from sqlalchemy import BigInteger, ForeignKey, String, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from src.infrastructure.database.base import Base
+from src.infrastructure.database.connection import Base
 
 if TYPE_CHECKING:
     from src.infrastructure.database.models.guild import GuildModel
@@ -20,7 +20,7 @@ class MemberModel(Base):
     nickname: Mapped[str | None] = mapped_column(String(100), nullable=True)
     joined_guild_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        default=datetime.now(timezone.utc)
+        default=lambda: datetime.now(timezone.utc)
     )
 
     guild: Mapped["GuildModel"] = relationship(back_populates="members")

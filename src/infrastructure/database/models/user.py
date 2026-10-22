@@ -4,7 +4,7 @@ from typing import List, TYPE_CHECKING
 from sqlalchemy import BigInteger, String, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from src.infrastructure.database.base import Base
+from src.infrastructure.database.connection import Base
 
 if TYPE_CHECKING:
     from src.infrastructure.database.models.member import MemberModel
@@ -17,7 +17,7 @@ class UserModel(Base):
     username: Mapped[str] = mapped_column(String(100), nullable=False)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        default=datetime.now(timezone.utc)
+        default=lambda: datetime.now(timezone.utc)
     )
 
     memberships: Mapped[List["MemberModel"]] = relationship(
