@@ -1,0 +1,42 @@
+{
+  "app": {
+    "commands": {
+      "info": {
+        "prefix": {
+          "current_prefix": "Prefijo actual: {prefix}",
+          "set_prefix": "Prefijo ajustado a {prefix}"
+        }
+      },
+      "music": {
+        "play": {
+          "not_connected": "Por favor, únete a un canal de voz antes de usar este comando.",
+          "unable_connect": "No he podido unirme a este canal de voz. Por favor, inténtalo de nuevo.",
+          "already_playing": "Solo puedes reproducir canciones en {channel}, ya que el reproductor ya está activo allí.",
+          "not_found": "{member} No se ha encontrado ninguna pista con esa búsqueda. Por favor, inténtalo de nuevo.",
+          "queue_add": "Se ha añadido {track} a la cola.",
+          "playlist_add": "Se ha añadido la lista de reproducción {name} ({added} canciones) a la cola."
+        },
+        "volume": {
+          "current_volume": "Volumen actual: {volume}%",
+          "invalid_volume": "El volumen debe ser entre 1 y 100",
+          "set_volume": "Volumen ajustado a: {volume}%"
+        }
+      },
+      "settings": {
+        "language": {
+          "current_language": "Idioma configurado {language}. Opciones: {supported}",
+          "not_supported": "{err} no tiene soporte. Opciones: {supported}",
+          "set_language": "Idioma cambiado a: {language}"
+        }
+      }
+    },
+    "events": {
+      "message": {
+        "on_message": {
+        }
+      }
+    },
+    "tasks": {
+    }
+  }
+}

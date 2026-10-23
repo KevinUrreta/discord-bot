@@ -1,0 +1,42 @@
+{
+  "app": {
+    "commands": {
+      "info": {
+        "prefix": {
+          "current_prefix": "Current prefix: {prefix}",
+          "set_prefix": "Prefix set to {prefix}"
+        }
+      },
+      "music": {
+        "play": {
+          "not_connected": "Please join a voice channel before using this command.",
+          "unable_connect": "I was unable to join this voice channel. Please try again.",
+          "already_playing": "You can only play songs in {channel}, as the player is already active there.",
+          "not_found": "{member} No track found for that search. Please try again.",
+          "queue_add": "{track} has been added to the queue.",
+          "playlist_add": "Playlist {name} ({added} songs) has been added to the queue."
+        },
+        "volume": {
+          "current_volume": "Current volume: {volume}%",
+          "invalid_volume": "Volume must be between 1 and 100.",
+          "set_volume": "Volume set to: {volume}%"
+        }
+      },
+      "settings": {
+        "language": {
+          "current_language": "Language set to {language}. Options: {supported}",
+          "not_supported": "{err} is not supported. Options: {supported}",
+          "set_language": "Language changed to: {language}"
+        }
+      }
+    },
+    "events": {
+      "message": {
+        "on_message": {
+        }
+      }
+    },
+    "tasks": {
+    }
+  }
+}
