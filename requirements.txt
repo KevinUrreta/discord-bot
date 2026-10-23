@@ -8,3 +8,4 @@ wavelink
 sqlalchemy
 greenlet
 asyncpg
+yt-dlp
