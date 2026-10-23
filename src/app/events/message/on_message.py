@@ -1,4 +1,8 @@
+import logging
+
 from discord.ext import commands
+
+logger = logging.getLogger("discord")
 
 class OnMessage(commands.Cog):
     def __init__(self, client):
@@ -8,4 +12,4 @@ class OnMessage(commands.Cog):
     async def on_message(self, message):
         if message.author == self.client.user:
             return
-        print(message.content)
+        logger.info(f"{message.author.name}: {message.content}")
