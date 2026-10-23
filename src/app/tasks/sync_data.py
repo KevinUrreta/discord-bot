@@ -1,4 +1,3 @@
-
 import logging
 from datetime import datetime
 
@@ -34,19 +33,30 @@ class SyncData(commands.Cog):
 
             for guild in self.client.guilds:
                 db_guild = await guilds.read(guild.id)
+
+                guild_joined_at = guild.me.joined_at if guild.me else None
+
                 if db_guild is None:
-                    await guilds.create(id=guild.id, name=guild.name)
+                    await guilds.create(
+                        id=guild.id,
+                        name=guild.name,
+                        joined_at=guild_joined_at
+                    )
                     if await settings.read(guild.id) is None:
                         await settings.create(guild_id=guild.id)
-                elif db_guild.name != guild.name:
-                    await guilds.update(guild.id, name=guild.name)
+                elif db_guild.name != guild.name or db_guild.joined_at != guild_joined_at:
+                    await guilds.update(guild.id, name=guild.name, joined_at=guild_joined_at)
 
                 async for member in guild.fetch_members(limit=None):
                     active_members.add((guild.id, member.id))
 
                     user = await users.read(member.id)
                     if user is None:
-                        await users.create(id=member.id, username=member.name)
+                        await users.create(
+                            id=member.id,
+                            username=member.name,
+                            created_at=member.created_at
+                        )
                     elif user.username != member.name:
                         await users.update(member.id, username=member.name)
 
@@ -65,8 +75,8 @@ class SyncData(commands.Cog):
                             **data,
                         )
                     elif any(
-                        getattr(db_member, key) != value
-                        for key, value in data.items()
+                            getattr(db_member, key) != value
+                            for key, value in data.items()
                     ):
                         await members.update(guild.id, member.id, **data)
 
