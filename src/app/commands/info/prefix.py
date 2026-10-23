@@ -1,7 +1,7 @@
 from discord.ext import commands
 
 from src.app.client import Client
-from src.i18n.translate import i18n
+from src.helpers.embed import CustomEmbed
 from src.infrastructure.database.repositories.guild_settings import GuildSettingsRepository
 
 
@@ -20,8 +20,18 @@ class Prefix(commands.Cog):
         current = settings.prefix
 
         if prefix is None:
-            await ctx.send(await i18n(ctx, "app.commands.info.prefix.current_prefix", prefix=current))
+            await ctx.send(embed=await CustomEmbed.create(
+                ctx,
+                key="app.commands.info.prefix.current_prefix",
+                prefix=current,
+                footer_icon=ctx.author.display_avatar.url
+            ))
             return
 
         await repo.update(guild.id, prefix=prefix)
-        await ctx.send(await i18n(ctx, "app.commands.info.prefix.set_prefix", prefix=prefix))
+        await ctx.send(embed=await CustomEmbed.create(
+            ctx,
+            key="app.commands.info.prefix.set_prefix",
+            prefix=prefix,
+            footer_icon=ctx.author.display_avatar.url
+        ))

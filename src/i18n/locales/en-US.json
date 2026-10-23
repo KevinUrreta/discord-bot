@@ -3,40 +3,157 @@
     "commands": {
       "info": {
         "prefix": {
-          "current_prefix": "Current prefix: {prefix}",
-          "set_prefix": "Prefix set to {prefix}"
+          "current_prefix": {
+            "title": "Prefix Configuration",
+            "description": "The current prefix on this server is **`{prefix}`**. Use this character before each command.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "set_prefix": {
+            "title": "Prefix Updated",
+            "description": "The prefix has been modified to **`{prefix}`**. Please ensure server members are informed to prevent errors when executing commands.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          }
         }
       },
       "music": {
         "play": {
-          "not_connected": "Please join a voice channel before using this command.",
-          "unable_connect": "I was unable to join this voice channel. Please try again.",
-          "already_playing": "You can only play songs in {channel}, as the player is already active there.",
-          "not_found": "{member} No track found for that search. Please try again.",
-          "queue_add": "{track} has been added to the queue.",
-          "playlist_add": "Playlist {name} ({added} songs) has been added to the queue."
+          "voice_not_connected": {
+            "title": "Not Connected to a Voice Channel",
+            "description": "Playback cannot be started. You must join a voice channel first to allow connection.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "unable_connect": {
+            "title": "Connection Error",
+            "description": "It was not possible to connect to the voice channel. Please verify that the necessary permissions to join and speak are available.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "already_playing": {
+            "title": "Active Player",
+            "description": "Audio is already playing in the channel {channel}. Changing channels is not possible while users are listening.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "no_song_found": {
+            "title": "No Song Found",
+            "description": "No results were found matching the requested search. Please provide a more specific title or enter a direct link.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "added_to_queue": {
+            "title": "Song Added to Queue",
+            "description": "**{title}**\n\nQueue position: **{queue}**\n\nThe track has been successfully added to the list and will play in its respective turn.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "playlist_added_to_queue": {
+            "title": "Playlist Added to Queue",
+            "description": "**{title}**\n\nTotal songs in queue: **{queue}**\n\nThe playlist has been fully loaded and the tracks will play sequentially.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "now_playing": {
+            "title": "Now Playing",
+            "fields": [
+              {
+                "name": "Title",
+                "value": "**{title}**",
+                "inline": false
+              },
+              {
+                "name": "Duration",
+                "value": "{duration}",
+                "inline": true
+              },
+              {
+                "name": "Views",
+                "value": "{views}",
+                "inline": true
+              },
+              {
+                "name": "In Queue",
+                "value": "{queue}",
+                "inline": true
+              }
+            ],
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          }
         },
         "volume": {
-          "current_volume": "Current volume: {volume}%",
-          "invalid_volume": "Volume must be between 1 and 100.",
-          "set_volume": "Volume set to: {volume}%"
+          "current_volume": {
+            "title": "Current Volume",
+            "description": "The playback volume is currently set to **{volume}%**.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "invalid_volume": {
+            "title": "Invalid Volume",
+            "description": "The specified value is incorrect. You must provide an integer between **1** and **100**.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "invalid_type": {
+            "title": "Unexpected Value",
+            "description": "The argument provided is invalid. Please enter a number from 1 to 100 to adjust the volume.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "set_volume": {
+            "title": "Volume Adjusted",
+            "description": "The volume has been successfully updated to **{volume}%**.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          }
         }
       },
       "settings": {
         "language": {
-          "current_language": "Language set to {language}. Options: {supported}",
-          "not_supported": "{err} is not supported. Options: {supported}",
-          "set_language": "Language changed to: {language}"
+          "current_language": {
+            "title": "Language Configuration",
+            "description": "The current language for messages is **{language}**.\n\nAvailable languages on this server: `{supported}`",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "not_supported": {
+            "title": "Unsupported Language",
+            "description": "The language `{err}` is not available.\n\nPlease select a valid option from the following list: `{supported}`",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "set_language": {
+            "title": "Language Changed",
+            "description": "From now on, responses and messages will be sent in **{language}**.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          }
         }
       }
     },
     "events": {
       "message": {
-        "on_message": {
-        }
+        "on_message": {}
       }
     },
-    "tasks": {
-    }
+    "tasks": {}
   }
 }

@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Union
+
 from discord.ext import commands
 
 from src.infrastructure.database.repositories.guild_settings import GuildSettingsRepository
@@ -70,27 +71,30 @@ class Translator:
                 return None
         return data
 
-    async def translate(self, ctx: commands.Context, key: str, **kwargs: Any) -> str:
+    async def translate(self, ctx: commands.Context, key: str, **kwargs: Any) -> Union[str, Dict[str, Any], list]:
         guild = ctx.guild
         client = ctx.bot
         lang = await self.__get_guild_language(client, guild.id if guild else None)
 
         keys = key.split(".")
 
-        text = self.__traverse(self.__translations.get(lang), keys)
+        result = self.__traverse(self.__translations.get(lang), keys)
 
-        if text is None:
-            text = self.__traverse(self.__translations.get(self.__default_lang), keys)
+        if result is None:
+            result = self.__traverse(self.__translations.get(self.__default_lang), keys)
 
-        if text is None or not isinstance(text, str):
+        if result is None:
             return key
 
-        if kwargs:
-            try:
-                return text.format(**kwargs)
-            except KeyError:
-                return text
-        return text
+        if isinstance(result, str):
+            if kwargs:
+                try:
+                    return result.format(**kwargs)
+                except KeyError:
+                    return result
+            return result
+
+        return result
 
 
 translator = Translator()

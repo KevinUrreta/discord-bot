@@ -3,40 +3,109 @@
     "commands": {
       "info": {
         "prefix": {
-          "current_prefix": "Prefijo actual: {prefix}",
-          "set_prefix": "Prefijo ajustado a {prefix}"
+          "current_prefix": {
+            "title": "Configuración de Prefijo",
+            "description": "El prefijo actual en este servidor es **`{prefix}`**. Utilice este carácter antes de cada comando.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "set_prefix": {
+            "title": "Prefijo Actualizado",
+            "description": "El prefijo se ha modificado a **`{prefix}`**. Asegúrese de informar a los miembros del servidor para evitar errores al ejecutar comandos.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          }
         }
       },
       "music": {
         "play": {
-          "not_connected": "Por favor, únete a un canal de voz antes de usar este comando.",
-          "unable_connect": "No he podido unirme a este canal de voz. Por favor, inténtalo de nuevo.",
-          "already_playing": "Solo puedes reproducir canciones en {channel}, ya que el reproductor ya está activo allí.",
-          "not_found": "{member} No se ha encontrado ninguna pista con esa búsqueda. Por favor, inténtalo de nuevo.",
-          "queue_add": "Se ha añadido {track} a la cola.",
-          "playlist_add": "Se ha añadido la lista de reproducción {name} ({added} canciones) a la cola."
-        },
-        "volume": {
-          "current_volume": "Volumen actual: {volume}%",
-          "invalid_volume": "El volumen debe ser entre 1 y 100",
-          "set_volume": "Volumen ajustado a: {volume}%"
-        }
-      },
-      "settings": {
-        "language": {
-          "current_language": "Idioma configurado {language}. Opciones: {supported}",
-          "not_supported": "{err} no tiene soporte. Opciones: {supported}",
-          "set_language": "Idioma cambiado a: {language}"
+          "missing_song": {
+            "title": "Falta parámetro",
+            "description": "Por favor, introduce el nombre o el enlace de la canción que deseas reproducir.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "voice_not_connected": {
+            "title": "No estás en un canal de voz",
+            "description": "No se puede iniciar la reproducción. Debe conectarse primero a un canal de voz para poder unirse.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "unable_connect": {
+            "title": "Error de conexión",
+            "description": "No ha sido posible conectarse al canal de voz. Por favor, verifique que se disponga de los permisos necesarios para unirse y hablar.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "already_playing": {
+            "title": "Reproductor activo",
+            "description": "Ya se está reproduciendo música en el canal {channel}. No es posible cambiar de canal mientras haya usuarios escuchando.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "no_song_found": {
+            "title": "Canción no encontrada",
+            "description": "No se han encontrado resultados para la búsqueda solicitada. Intente especificar mejor el título o introduzca un enlace directo.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "added_to_queue": {
+            "title": "Canción añadida a la cola",
+            "description": "**{title}**\n\nPosición en la cola: **{queue}**\n\nEl tema se ha añadido correctamente a la lista y se reproducirá en su turno.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "playlist_added_to_queue": {
+            "title": "Lista añadida a la cola",
+            "description": "**{title}**\n\nCanciones totales en cola: **{queue}**\n\nLa lista de reproducción se ha cargado por completo y las pistas se reproducirán en orden.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "now_playing": {
+            "title": "Ahora suena",
+            "fields": [
+              {
+                "name": "Título",
+                "value": "**{title}**",
+                "inline": false
+              },
+              {
+                "name": "Duración",
+                "value": "{duration}",
+                "inline": true
+              },
+              {
+                "name": "Visitas",
+                "value": "{views}",
+                "inline": true
+              },
+              {
+                "name": "En cola",
+                "value": "{queue}",
+                "inline": true
+              }
+            ],
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          }
         }
       }
     },
     "events": {
       "message": {
-        "on_message": {
-        }
+        "on_message": {}
       }
     },
-    "tasks": {
-    }
+    "tasks": {}
   }
 }

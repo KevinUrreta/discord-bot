@@ -4,7 +4,7 @@ import wavelink
 from discord.ext import commands
 
 from src.app.client import Client
-from src.i18n.translate import i18n
+from src.helpers.embed import CustomEmbed
 from src.infrastructure.database.repositories.guild_settings import GuildSettingsRepository
 
 
@@ -23,15 +23,29 @@ class Volume(commands.Cog):
         current = settings.volume
 
         if volume is None:
-            await ctx.send(await i18n(ctx, "app.commands.music.volume.current_volume", volume=current))
+            await ctx.send(embed=await CustomEmbed.create(
+                ctx,
+                key="app.commands.music.volume.current_volume",
+                volume=current,
+                footer_icon=ctx.author.display_avatar.url
+            ))
             return
         if not 1 <= volume <= 100:
-            await ctx.send(await i18n(ctx, "app.commands.music.volume.invalid_volume"))
+            await ctx.send(embed=await CustomEmbed.create(
+                ctx,
+                key="app.commands.music.volume.invalid_volume",
+                footer_icon=ctx.author.display_avatar.url
+            ))
             return
         if ctx.voice_client is not None:
             player = cast(wavelink.Player, ctx.voice_client)
             await player.set_volume(volume)
 
         await repo.update(guild.id, volume=volume)
-        await ctx.send(await i18n(ctx, "app.commands.music.volume.set_volume", volume=volume))
+        await ctx.send(embed=await CustomEmbed.create(
+            ctx,
+            key="app.commands.music.volume.set_volume",
+            volume=volume,
+            footer_icon=ctx.author.display_avatar.url
+        ))
         return
