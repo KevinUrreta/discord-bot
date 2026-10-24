@@ -21,5 +21,6 @@ class GuildSettingsModel(Base):
     prefix: Mapped[str] = mapped_column(String(10), default="!", nullable=False)
     language: Mapped[str] = mapped_column(String(10), default="en", nullable=False)
     volume: Mapped[int] = mapped_column(default=100, nullable=False)
+    autoplay: Mapped[str] = mapped_column(String(20), default="disabled", nullable=False)
 
     guild: Mapped["GuildModel"] = relationship(back_populates="settings")

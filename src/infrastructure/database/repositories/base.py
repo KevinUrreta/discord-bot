@@ -32,14 +32,30 @@ class BaseRepository(Generic[ModelType]):
 
     @with_session
     async def update(self, *keys: object, session: AsyncSession, **data: Any) -> ModelType | None:
-        obj = await self.read_in_session(session, *keys)
-        if obj is None:
-            return None
         mapper = inspect(self.model)
         columns = {attr.key for attr in mapper.column_attrs}
         primary = {column.key for column in mapper.primary_key}
+
         if set(data) - columns or set(data) & primary:
             raise ValueError("Campo desconocido o clave primaria no modificable")
+
+        obj = await self.read_in_session(session, *keys)
+        if obj is None:
+            if len(primary) == 1:
+                if len(keys) != 1:
+                    raise ValueError("Debes indicar la clave primaria del modelo")
+                create_data = {next(iter(primary)): keys[0], **data}
+            else:
+                if len(keys) != len(primary):
+                    raise ValueError("Debes indicar todas las claves primarias del modelo")
+                create_data = {column.key: value for column, value in zip(mapper.primary_key, keys)}
+                create_data.update(data)
+
+            obj = self.model(**create_data)
+            session.add(obj)
+            await session.flush()
+            return obj
+
         for field, value in data.items():
             setattr(obj, field, value)
         await session.flush()
