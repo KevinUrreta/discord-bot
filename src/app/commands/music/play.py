@@ -1,4 +1,6 @@
+import asyncio
 from typing import cast
+from urllib.parse import urlsplit
 
 import discord
 import wavelink
@@ -49,12 +51,10 @@ class Play(commands.Cog):
             ))
             return
 
-        # This will handle fetching Tracks and Playlists...
-        # Seed the doc strings for more information on this method...
-        # If spotify is enabled via LavaSrc, this will automatically fetch Spotify tracks if you pass a URL...
-        # Defaults to YouTube for non URL based queries...
-        tracks: wavelink.Search = await wavelink.Playable.search(query) if query.startswith("https://")\
-            else await wavelink.Playable.search(query, source="ytsearch")
+        if query.startswith("https://"):
+            tracks = await wavelink.Playable.search(query)
+        else:
+            tracks = await wavelink.Playable.search(query, source="ytsearch")
         if not tracks:
             await ctx.send(embed=await CustomEmbed.create(
                 ctx,
@@ -65,8 +65,7 @@ class Play(commands.Cog):
             ))
             return
 
-        if isinstance(tracks, wavelink.Playlist):
-            # tracks is a playlist...
+        if tracks is not None:
             for t in tracks:
                 t.extras = {
                     "author_name": ctx.author.display_name,
@@ -77,7 +76,7 @@ class Play(commands.Cog):
             await ctx.send(embed=await CustomEmbed.create(
                 ctx,
                 key="app.commands.music.play.playlist_added_to_queue",
-                title=tracks.name,
+                title=playlist_title,
                 queue=added,
                 user=ctx.author.display_name,
                 footer_icon=ctx.author.display_avatar.url
