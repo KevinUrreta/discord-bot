@@ -1,0 +1,37 @@
+# Git metadata: not needed to build the image.
+.git/
+.gitignore
+.dockerignore
+
+# Local virtual environments.
+.venv/
+ENV/
+env/
+venv/
+
+# Environment variable files; may contain secrets.
+.env
+.env.*
+
+# Bytecode, caches, and output from development and testing tools.
+__pycache__/
+*.py[cod]
+*$py.class
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local directories and data that should not be included in the image.
+/docker
+/logs
+/postgres_data
+# Log files.
+*.log
+
+# Editor configuration and operating system files.
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
