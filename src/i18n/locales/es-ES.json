@@ -5,14 +5,14 @@
         "prefix": {
           "current_prefix": {
             "title": "Configuración de Prefijo",
-            "description": "El prefijo actual en este servidor es **`{prefix}`**. Utilice este carácter antes de cada comando.",
+            "description": "El prefijo actual en este servidor es **{prefix}**. ",
             "footer": {
               "text": "Pedido por: {user}"
             }
           },
           "set_prefix": {
             "title": "Prefijo Actualizado",
-            "description": "El prefijo se ha modificado a **`{prefix}`**. Asegúrese de informar a los miembros del servidor para evitar errores al ejecutar comandos.",
+            "description": "El prefijo se ha modificado a **{prefix}**.",
             "footer": {
               "text": "Pedido por: {user}"
             }
@@ -21,79 +21,149 @@
       },
       "music": {
         "play": {
-          "missing_song": {
-            "title": "Falta parámetro",
-            "description": "Por favor, introduce el nombre o el enlace de la canción que deseas reproducir.",
-            "footer": {
-              "text": "Pedido por: {user}"
-            }
-          },
           "voice_not_connected": {
-            "title": "No estás en un canal de voz",
-            "description": "No se puede iniciar la reproducción. Debe conectarse primero a un canal de voz para poder unirse.",
+            "title": "No estás conectado a un canal de voz",
+            "description": "No se puede iniciar la reproducción.",
             "footer": {
               "text": "Pedido por: {user}"
             }
           },
           "unable_connect": {
-            "title": "Error de conexión",
-            "description": "No ha sido posible conectarse al canal de voz. Por favor, verifique que se disponga de los permisos necesarios para unirse y hablar.",
+            "title": "Error de Conexión",
+            "description": "No ha sido posible conectarse al canal de voz.",
             "footer": {
               "text": "Pedido por: {user}"
             }
           },
           "already_playing": {
-            "title": "Reproductor activo",
-            "description": "Ya se está reproduciendo música en el canal {channel}. No es posible cambiar de canal mientras haya usuarios escuchando.",
+            "title": "Reproductor Activo",
+            "description": "Ya se está reproduciendo audio en el canal {channel}.",
             "footer": {
               "text": "Pedido por: {user}"
             }
           },
           "no_song_found": {
-            "title": "Canción no encontrada",
-            "description": "No se han encontrado resultados para la búsqueda solicitada. Intente especificar mejor el título o introduzca un enlace directo.",
+            "title": "Canción No Encontrada",
+            "description": "No se han encontrado resultados que coincidan con la búsqueda solicitada.",
             "footer": {
               "text": "Pedido por: {user}"
             }
           },
           "added_to_queue": {
-            "title": "Canción añadida a la cola",
-            "description": "**{title}**\n\nPosición en la cola: **{queue}**\n\nEl tema se ha añadido correctamente a la lista y se reproducirá en su turno.",
+            "title": "Canción Añadida a la Cola",
+            "description": "**{title}**\nPosición en cola: **{queue}**\n",
             "footer": {
               "text": "Pedido por: {user}"
             }
           },
           "playlist_added_to_queue": {
-            "title": "Lista añadida a la cola",
-            "description": "**{title}**\n\nCanciones totales en cola: **{queue}**\n\nLa lista de reproducción se ha cargado por completo y las pistas se reproducirán en orden.",
+            "title": "Lista de Reproducción Añadida a la Cola",
+            "description": "**{title}**\nTotal de canciones en cola: **{queue}**\n",
             "footer": {
               "text": "Pedido por: {user}"
             }
           },
           "now_playing": {
-            "title": "Ahora suena",
+            "title": "Ahora Suena",
             "fields": [
               {
-                "name": "Título",
-                "value": "**{title}**",
+                "value": "*[{title}]({url})*",
                 "inline": false
               },
               {
-                "name": "Duración",
-                "value": "{duration}",
+                "name": "**Duración:**",
+                "value": "{duration} min",
                 "inline": true
               },
               {
-                "name": "Visitas",
+                "name": "**Visitas:**",
                 "value": "{views}",
                 "inline": true
               },
               {
-                "name": "En cola",
+                "name": "**En Cola:**",
                 "value": "{queue}",
                 "inline": true
               }
             ],
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          }
+        },
+        "volume": {
+          "current_volume": {
+            "title": "Volumen Actual",
+            "description": "El volumen de reproducción se encuentra establecido en **{volume}%**.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "invalid_volume": {
+            "title": "Volumen Inválido",
+            "description": "Debes proporcionar un número entre **1** y **100**.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "invalid_type": {
+            "title": "Valor Inesperado",
+            "description": "Introduce un número del 1 al 100 para ajustar el volumen.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "set_volume": {
+            "title": "Volumen Ajustado",
+            "description": "El volumen se ha actualizado correctamente al **{volume}%**.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          }
+        },
+        "autoplay": {
+          "current": {
+            "title": "Configuración de Autoplay",
+            "description": "El modo autoplay actual para este servidor es: **{mode}**.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "updated": {
+            "title": "Autoplay Actualizado",
+            "description": "Se ha actualizado correctamente el modo autoplay a: **{mode}**.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "invalid": {
+            "title": "Modo Inválido",
+            "description": "El modo indicado no es correcto. Utiliza: *enabled*, *partial* o *disabled*.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          }
+        }
+      },
+      "settings": {
+        "language": {
+          "current_language": {
+            "title": "Configuración de Idioma",
+            "description": "El idioma actual para los mensajes es **{language}**.\nIdiomas disponibles *{supported}*",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "not_supported": {
+            "title": "Idioma No Soportado",
+            "description": "El idioma *{err}* no se encuentra disponible.\nIdiomas disponibles *{supported}*",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "set_language": {
+            "title": "Idioma Modificado",
+            "description": "El idioma se ha modificado a **{language}**.",
             "footer": {
               "text": "Pedido por: {user}"
             }
@@ -104,6 +174,12 @@
     "events": {
       "message": {
         "on_message": {}
+      },
+      "wavelink": {
+        "idle_disconnect": {
+          "title": "Desconexión por Inactividad",
+          "description": "El reproductor se ha desconectado del canal de voz debido a inactividad."
+        }
       }
     },
     "tasks": {}

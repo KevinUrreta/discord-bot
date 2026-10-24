@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 from typing import Any, Dict, Optional, Union
 
+import discord
 from discord.ext import commands
 
 from src.infrastructure.database.repositories.guild_settings import GuildSettingsRepository
@@ -50,7 +51,7 @@ class Translator:
         return self.supported
 
     async def __get_guild_language(self, client, guild_id: Optional[int]) -> str:
-        if guild_id is None:
+        if client is None or guild_id is None:
             return self.__default_lang
 
         repo = GuildSettingsRepository(client.db)
@@ -71,9 +72,17 @@ class Translator:
                 return None
         return data
 
-    async def translate(self, ctx: commands.Context, key: str, **kwargs: Any) -> Union[str, Dict[str, Any], list]:
-        guild = ctx.guild
-        client = ctx.bot
+    async def translate(self, target: Union[commands.Context, discord.Guild, None], key: str, *,
+                        client: discord.Client | None = None, **kwargs: Any) -> Union[
+        str, Dict[str, Any], list]:
+        if isinstance(target, commands.Context):
+            guild = target.guild
+            client = target.bot
+        elif isinstance(target, discord.Guild):
+            guild = target
+        else:
+            guild = None
+
         lang = await self.__get_guild_language(client, guild.id if guild else None)
 
         keys = key.split(".")

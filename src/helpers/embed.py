@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Union
 
 import discord
 from discord.ext import commands
@@ -23,16 +23,17 @@ class CustomEmbed:
     @classmethod
     async def create(
             cls,
-            ctx: commands.Context,
+            target: Union[commands.Context, discord.Guild, None],
             key: str,
             *,
             thumbnail: str | None = None,
             timestamp: bool = True,
             color: discord.Color = discord.Color.purple(),
+            client: discord.Client | None = None,
             **kwargs,
     ) -> discord.Embed:
 
-        raw_data = await i18n(ctx, key, **kwargs)
+        raw_data = await i18n(target, key, client=client, **kwargs)
 
         if isinstance(raw_data, str) and raw_data == key:
             raise ValueError(f"Embed translation '{key}' does not exist.")

@@ -5,14 +5,14 @@
         "prefix": {
           "current_prefix": {
             "title": "Prefix Configuration",
-            "description": "The current prefix on this server is **`{prefix}`**. Use this character before each command.",
+            "description": "The current prefix on this server is **{prefix}**.",
             "footer": {
               "text": "Requested by: {user}"
             }
           },
           "set_prefix": {
             "title": "Prefix Updated",
-            "description": "The prefix has been modified to **`{prefix}`**. Please ensure server members are informed to prevent errors when executing commands.",
+            "description": "The prefix has been changed to **{prefix}**.",
             "footer": {
               "text": "Requested by: {user}"
             }
@@ -22,43 +22,43 @@
       "music": {
         "play": {
           "voice_not_connected": {
-            "title": "Not Connected to a Voice Channel",
-            "description": "Playback cannot be started. You must join a voice channel first to allow connection.",
+            "title": "You're Not Connected to a Voice Channel",
+            "description": "Playback cannot start until you join a voice channel.",
             "footer": {
               "text": "Requested by: {user}"
             }
           },
           "unable_connect": {
             "title": "Connection Error",
-            "description": "It was not possible to connect to the voice channel. Please verify that the necessary permissions to join and speak are available.",
+            "description": "Unable to connect to the voice channel.",
             "footer": {
               "text": "Requested by: {user}"
             }
           },
           "already_playing": {
-            "title": "Active Player",
-            "description": "Audio is already playing in the channel {channel}. Changing channels is not possible while users are listening.",
+            "title": "Player Already Active",
+            "description": "Audio is already playing in channel {channel}.",
             "footer": {
               "text": "Requested by: {user}"
             }
           },
           "no_song_found": {
-            "title": "No Song Found",
-            "description": "No results were found matching the requested search. Please provide a more specific title or enter a direct link.",
+            "title": "No Songs Found",
+            "description": "No results matched your search.",
             "footer": {
               "text": "Requested by: {user}"
             }
           },
           "added_to_queue": {
             "title": "Song Added to Queue",
-            "description": "**{title}**\n\nQueue position: **{queue}**\n\nThe track has been successfully added to the list and will play in its respective turn.",
+            "description": "**{title}**\nQueue position: **{queue}**\n",
             "footer": {
               "text": "Requested by: {user}"
             }
           },
           "playlist_added_to_queue": {
             "title": "Playlist Added to Queue",
-            "description": "**{title}**\n\nTotal songs in queue: **{queue}**\n\nThe playlist has been fully loaded and the tracks will play sequentially.",
+            "description": "**{title}**\nTotal tracks in queue: **{queue}**\n",
             "footer": {
               "text": "Requested by: {user}"
             }
@@ -67,22 +67,21 @@
             "title": "Now Playing",
             "fields": [
               {
-                "name": "Title",
-                "value": "**{title}**",
+                "value": "*{title}*",
                 "inline": false
               },
               {
-                "name": "Duration",
+                "name": "**Duration:**",
                 "value": "{duration}",
                 "inline": true
               },
               {
-                "name": "Views",
+                "name": "**Views:**",
                 "value": "{views}",
                 "inline": true
               },
               {
-                "name": "In Queue",
+                "name": "**In Queue:**",
                 "value": "{queue}",
                 "inline": true
               }
@@ -95,28 +94,51 @@
         "volume": {
           "current_volume": {
             "title": "Current Volume",
-            "description": "The playback volume is currently set to **{volume}%**.",
+            "description": "Playback volume is set to **{volume}%**.",
             "footer": {
               "text": "Requested by: {user}"
             }
           },
           "invalid_volume": {
             "title": "Invalid Volume",
-            "description": "The specified value is incorrect. You must provide an integer between **1** and **100**.",
+            "description": "Enter a number between **1** and **100**.",
             "footer": {
               "text": "Requested by: {user}"
             }
           },
           "invalid_type": {
             "title": "Unexpected Value",
-            "description": "The argument provided is invalid. Please enter a number from 1 to 100 to adjust the volume.",
+            "description": "Enter a number from 1 to 100 to adjust the volume.",
             "footer": {
               "text": "Requested by: {user}"
             }
           },
           "set_volume": {
-            "title": "Volume Adjusted",
-            "description": "The volume has been successfully updated to **{volume}%**.",
+            "title": "Volume Updated",
+            "description": "Volume has been set to **{volume}%**.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          }
+        },
+        "autoplay": {
+          "current": {
+            "title": "Autoplay Settings",
+            "description": "Autoplay is currently set to **{mode}** on this server.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "updated": {
+            "title": "Autoplay Updated",
+            "description": "Autoplay has been set to **{mode}**.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "invalid": {
+            "title": "Invalid Mode",
+            "description": "Choose one of these modes: *enabled*, *partial*, or *disabled*.",
             "footer": {
               "text": "Requested by: {user}"
             }
@@ -126,22 +148,22 @@
       "settings": {
         "language": {
           "current_language": {
-            "title": "Language Configuration",
-            "description": "The current language for messages is **{language}**.\n\nAvailable languages on this server: `{supported}`",
+            "title": "Language Settings",
+            "description": "The current message language is **{language}**.\nAvailable languages: *{supported}*",
             "footer": {
               "text": "Requested by: {user}"
             }
           },
           "not_supported": {
             "title": "Unsupported Language",
-            "description": "The language `{err}` is not available.\n\nPlease select a valid option from the following list: `{supported}`",
+            "description": "The language *{err}* is not available.\nAvailable languages: *{supported}*",
             "footer": {
               "text": "Requested by: {user}"
             }
           },
           "set_language": {
-            "title": "Language Changed",
-            "description": "From now on, responses and messages will be sent in **{language}**.",
+            "title": "Language Updated",
+            "description": "The language has been changed to **{language}**.",
             "footer": {
               "text": "Requested by: {user}"
             }
@@ -152,6 +174,12 @@
     "events": {
       "message": {
         "on_message": {}
+      },
+      "wavelink": {
+        "idle_disconnect": {
+          "title": "Disconnected Due to Inactivity",
+          "description": "The player disconnected from the voice channel due to inactivity."
+        }
       }
     },
     "tasks": {}
