@@ -24,6 +24,7 @@ class Prefix(commands.Cog):
                 ctx,
                 key="app.commands.info.prefix.current_prefix",
                 prefix=current,
+                user=ctx.author.display_name,
                 footer_icon=ctx.author.display_avatar.url
             ))
             return
@@ -33,5 +34,6 @@ class Prefix(commands.Cog):
             ctx,
             key="app.commands.info.prefix.set_prefix",
             prefix=prefix,
+            user=ctx.author.display_name,
             footer_icon=ctx.author.display_avatar.url
         ))

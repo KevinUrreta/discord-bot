@@ -27,6 +27,7 @@ class Volume(commands.Cog):
                 ctx,
                 key="app.commands.music.volume.current_volume",
                 volume=current,
+                user=ctx.author.display_name,
                 footer_icon=ctx.author.display_avatar.url
             ))
             return
@@ -34,6 +35,7 @@ class Volume(commands.Cog):
             await ctx.send(embed=await CustomEmbed.create(
                 ctx,
                 key="app.commands.music.volume.invalid_volume",
+                user=ctx.author.display_name,
                 footer_icon=ctx.author.display_avatar.url
             ))
             return
@@ -46,6 +48,7 @@ class Volume(commands.Cog):
             ctx,
             key="app.commands.music.volume.set_volume",
             volume=volume,
+            user=ctx.author.display_name,
             footer_icon=ctx.author.display_avatar.url
         ))
         return
