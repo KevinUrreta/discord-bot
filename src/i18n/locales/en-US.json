@@ -5,7 +5,7 @@
         "prefix": {
           "current_prefix": {
             "title": "Prefix Configuration",
-            "description": "The current prefix on this server is **{prefix}**.",
+            "description": "The current prefix on this server is **{prefix}**. ",
             "footer": {
               "text": "Requested by: {user}"
             }
@@ -22,29 +22,29 @@
       "music": {
         "play": {
           "voice_not_connected": {
-            "title": "You're Not Connected to a Voice Channel",
-            "description": "Playback cannot start until you join a voice channel.",
+            "title": "You are not connected to a voice channel",
+            "description": "Playback cannot be started.",
             "footer": {
               "text": "Requested by: {user}"
             }
           },
           "unable_connect": {
             "title": "Connection Error",
-            "description": "Unable to connect to the voice channel.",
+            "description": "It was not possible to connect to the voice channel.",
             "footer": {
               "text": "Requested by: {user}"
             }
           },
           "already_playing": {
-            "title": "Player Already Active",
+            "title": "Active Player",
             "description": "Audio is already playing in channel {channel}.",
             "footer": {
               "text": "Requested by: {user}"
             }
           },
           "no_song_found": {
-            "title": "No Songs Found",
-            "description": "No results matched your search.",
+            "title": "Song Not Found",
+            "description": "No results matching the requested search were found.",
             "footer": {
               "text": "Requested by: {user}"
             }
@@ -58,7 +58,7 @@
           },
           "playlist_added_to_queue": {
             "title": "Playlist Added to Queue",
-            "description": "**{title}**\nTotal tracks in queue: **{queue}**\n",
+            "description": "**{title}**\nTotal songs in queue: **{queue}**\n",
             "footer": {
               "text": "Requested by: {user}"
             }
@@ -67,12 +67,12 @@
             "title": "Now Playing",
             "fields": [
               {
-                "value": "*{title}*",
+                "value": "*[{title}]({url})*",
                 "inline": false
               },
               {
                 "name": "**Duration:**",
-                "value": "{duration}",
+                "value": "{duration} min",
                 "inline": true
               },
               {
@@ -94,14 +94,14 @@
         "volume": {
           "current_volume": {
             "title": "Current Volume",
-            "description": "Playback volume is set to **{volume}%**.",
+            "description": "The playback volume is set to **{volume}%**.",
             "footer": {
               "text": "Requested by: {user}"
             }
           },
           "invalid_volume": {
             "title": "Invalid Volume",
-            "description": "Enter a number between **1** and **100**.",
+            "description": "You must provide a number between **1** and **100**.",
             "footer": {
               "text": "Requested by: {user}"
             }
@@ -114,8 +114,8 @@
             }
           },
           "set_volume": {
-            "title": "Volume Updated",
-            "description": "Volume has been set to **{volume}%**.",
+            "title": "Volume Adjusted",
+            "description": "The volume has been successfully updated to **{volume}%**.",
             "footer": {
               "text": "Requested by: {user}"
             }
@@ -123,22 +123,285 @@
         },
         "autoplay": {
           "current": {
-            "title": "Autoplay Settings",
-            "description": "Autoplay is currently set to **{mode}** on this server.",
+            "title": "Autoplay Configuration",
+            "description": "The current autoplay mode for this server is: **{mode}**.",
             "footer": {
               "text": "Requested by: {user}"
             }
           },
           "updated": {
             "title": "Autoplay Updated",
-            "description": "Autoplay has been set to **{mode}**.",
+            "description": "The autoplay mode has been successfully updated to: **{mode}**.",
             "footer": {
               "text": "Requested by: {user}"
             }
           },
           "invalid": {
             "title": "Invalid Mode",
-            "description": "Choose one of these modes: *enabled*, *partial*, or *disabled*.",
+            "description": "The specified mode is incorrect. Use: *enabled*, *partial*, or *disabled*.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          }
+        },
+        "clear": {
+          "not_connected": {
+            "title": "Not Connected",
+            "description": "The bot is not connected to any voice channel.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "empty": {
+            "title": "Queue Empty",
+            "description": "The playback queue is already empty.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "cleared": {
+            "title": "Queue Cleared",
+            "description": "The playback queue has been successfully cleared.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          }
+        },
+        "leave": {
+          "not_connected": {
+            "title": "Not Connected",
+            "description": "The bot is not in any voice channel.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "disconnected": {
+            "title": "Disconnected",
+            "description": "I have disconnected from the voice channel.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          }
+        },
+        "loop": {
+          "not_connected": {
+            "title": "Not Connected",
+            "description": "The bot is not connected to any voice channel.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "no_song_playing": {
+            "title": "No Playback",
+            "description": "There is no song currently playing.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "enabled": {
+            "title": "Loop Enabled",
+            "description": "Loop mode has been **enabled**.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "disabled": {
+            "title": "Loop Disabled",
+            "description": "Loop mode has been **disabled**.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          }
+        },
+        "now_playing": {
+          "success": {
+            "title": "Now Playing",
+            "fields": [
+              {
+                "value": "*[{title}]({url})*",
+                "inline": false
+              },
+              {
+                "name": "**Duration:**",
+                "value": "{duration} min",
+                "inline": true
+              },
+              {
+                "name": "**Views:**",
+                "value": "{views}",
+                "inline": true
+              },
+              {
+                "name": "**In Queue:**",
+                "value": "{queue}",
+                "inline": true
+              }
+            ]
+          }
+        },
+        "pause": {
+          "not_connected": {
+            "title": "Not Connected",
+            "description": "The bot is not connected to any voice channel.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "no_song_playing": {
+            "title": "No Playback",
+            "description": "There is no song currently playing to pause.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "paused": {
+            "title": "Playback Paused",
+            "description": "Playback has been successfully paused.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          }
+        },
+        "queue": {
+          "not_connected": {
+            "title": "Not Connected",
+            "description": "The bot is not connected to any voice channel.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "empty": {
+            "title": "Queue Empty",
+            "description": "The playback queue is empty.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "list": {
+            "title": "Playback Queue",
+            "description": "{queue}",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "success": {
+            "title": "Success",
+            "description": "Action successfully performed.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          }
+        },
+        "remove": {
+          "not_connected": {
+            "title": "Not Connected",
+            "description": "The bot is not connected to any voice channel.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "queue_empty": {
+            "title": "Queue Empty",
+            "description": "The playback queue is empty.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "invalid_position": {
+            "title": "Invalid Position",
+            "description": "Enter a valid position within the queue range.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "success": {
+            "title": "Song Removed",
+            "description": "**{title}** has been removed from the queue.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          }
+        },
+        "resume": {
+          "not_connected": {
+            "title": "Not Connected",
+            "description": "The bot is not connected to any voice channel.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "no_song_playing": {
+            "title": "Not Paused",
+            "description": "The player is not paused.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "success": {
+            "title": "Playback Resumed",
+            "description": "Playback has been resumed.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          }
+        },
+        "shuffle": {
+          "not_connected": {
+            "title": "Not Connected",
+            "description": "The bot is not connected to any voice channel.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "not_enough_songs": {
+            "title": "Not Enough Songs",
+            "description": "At least 2 songs are needed in the queue to shuffle.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "shuffled": {
+            "title": "Queue Shuffled",
+            "description": "The playback queue has been randomly shuffled.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          }
+        },
+        "skip": {
+          "not_connected": {
+            "title": "Not Connected",
+            "description": "The bot is not connected to any voice channel.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "no_song_playing": {
+            "title": "No Playback",
+            "description": "There is no song currently playing to skip.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "skipped": {
+            "title": "Song Skipped",
+            "description": "The current song has been skipped.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          }
+        },
+        "stop": {
+          "not_connected": {
+            "title": "Not Connected",
+            "description": "The bot is not connected to any voice channel.",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          },
+          "stopped": {
+            "title": "Player Stopped",
+            "description": "Playback has been stopped and the queue has been cleared.",
             "footer": {
               "text": "Requested by: {user}"
             }
@@ -149,20 +412,20 @@
         "language": {
           "current_language": {
             "title": "Language Settings",
-            "description": "The current message language is **{language}**.\nAvailable languages: *{supported}*",
+            "description": "The current language for messages is **{language}**.\nAvailable languages *{supported}*",
             "footer": {
               "text": "Requested by: {user}"
             }
           },
           "not_supported": {
             "title": "Unsupported Language",
-            "description": "The language *{err}* is not available.\nAvailable languages: *{supported}*",
+            "description": "The language *{err}* is not available.\nAvailable languages *{supported}*",
             "footer": {
               "text": "Requested by: {user}"
             }
           },
           "set_language": {
-            "title": "Language Updated",
+            "title": "Language Changed",
             "description": "The language has been changed to **{language}**.",
             "footer": {
               "text": "Requested by: {user}"
@@ -177,8 +440,8 @@
       },
       "wavelink": {
         "idle_disconnect": {
-          "title": "Disconnected Due to Inactivity",
-          "description": "The player disconnected from the voice channel due to inactivity."
+          "title": "Inactivity Disconnect",
+          "description": "The player has disconnected from the voice channel due to inactivity."
         }
       }
     },

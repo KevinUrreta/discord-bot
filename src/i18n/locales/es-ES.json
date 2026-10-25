@@ -143,6 +143,269 @@
               "text": "Pedido por: {user}"
             }
           }
+        },
+        "clear": {
+          "not_connected": {
+            "title": "No Conectado",
+            "description": "El bot no está conectado a ningún canal de voz.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "empty": {
+            "title": "Cola Vacía",
+            "description": "La cola de reproducción ya está vacía.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "cleared": {
+            "title": "Cola Limpia",
+            "description": "Se ha vaciado la cola de reproducción correctamente.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          }
+        },
+        "leave": {
+          "not_connected": {
+            "title": "No Conectado",
+            "description": "El bot no está en ningún canal de voz.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "disconnected": {
+            "title": "Desconectado",
+            "description": "Me he desconectado del canal de voz.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          }
+        },
+        "loop": {
+          "not_connected": {
+            "title": "No Conectado",
+            "description": "El bot no está conectado a ningún canal de voz.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "no_song_playing": {
+            "title": "Sin Reproducción",
+            "description": "No hay ninguna canción reproduciéndose actualmente.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "enabled": {
+            "title": "Bucle Activado",
+            "description": "El modo bucle ha sido **activado**.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "disabled": {
+            "title": "Bucle Desactivado",
+            "description": "El modo bucle ha sido **desactivado**.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          }
+        },
+        "now_playing": {
+          "success": {
+            "title": "Ahora Suena",
+            "fields": [
+              {
+                "value": "*[{title}]({url})*",
+                "inline": false
+              },
+              {
+                "name": "**Duración:**",
+                "value": "{duration} min",
+                "inline": true
+              },
+              {
+                "name": "**Visitas:**",
+                "value": "{views}",
+                "inline": true
+              },
+              {
+                "name": "**En Cola:**",
+                "value": "{queue}",
+                "inline": true
+              }
+            ]
+          }
+        },
+        "pause": {
+          "not_connected": {
+            "title": "No Conectado",
+            "description": "El bot no está conectado a ningún canal de voz.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "no_song_playing": {
+            "title": "Sin Reproducción",
+            "description": "No hay ninguna canción reproduciéndose para pausar.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "paused": {
+            "title": "Reproducción Pausada",
+            "description": "La reproducción ha sido pausada correctamente.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          }
+        },
+        "queue": {
+          "not_connected": {
+            "title": "No Conectado",
+            "description": "El bot no está conectado a ningún canal de voz.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "empty": {
+            "title": "Cola Vacía",
+            "description": "La cola de reproducción está vacía.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "list": {
+            "title": "Cola de Reproducción",
+            "description": "{queue}",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "success": {
+            "title": "Éxito",
+            "description": "Acción realizada con éxito.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          }
+        },
+        "remove": {
+          "not_connected": {
+            "title": "No Conectado",
+            "description": "El bot no está conectado a ningún canal de voz.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "queue_empty": {
+            "title": "Cola Vacía",
+            "description": "La cola de reproducción está vacía.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "invalid_position": {
+            "title": "Posición Inválida",
+            "description": "Introduce una posición válida dentro del rango de la cola.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "success": {
+            "title": "Canción Eliminada",
+            "description": "Se ha eliminado **{title}** de la cola.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          }
+        },
+        "resume": {
+          "not_connected": {
+            "title": "No Conectado",
+            "description": "El bot no está conectado a ningún canal de voz.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "no_song_playing": {
+            "title": "No Pausado",
+            "description": "El reproductor no se encuentra pausado.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "success": {
+            "title": "Reproducción Reanudada",
+            "description": "La reproducción ha sido reanudada.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          }
+        },
+        "shuffle": {
+          "not_connected": {
+            "title": "No Conectado",
+            "description": "El bot no está conectado a ningún canal de voz.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "not_enough_songs": {
+            "title": "Poco contenido",
+            "description": "Se necesitan al menos 2 canciones en cola para barajar.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "shuffled": {
+            "title": "Cola Barajada",
+            "description": "La cola de reproducción ha sido mezclada aleatoriamente.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          }
+        },
+        "skip": {
+          "not_connected": {
+            "title": "No Conectado",
+            "description": "El bot no está conectado a ningún canal de voz.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "no_song_playing": {
+            "title": "Sin Reproducción",
+            "description": "No hay ninguna canción reproduciéndose para saltar.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "skipped": {
+            "title": "Canción Saltada",
+            "description": "Se ha saltado la canción actual.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          }
+        },
+        "stop": {
+          "not_connected": {
+            "title": "No Conectado",
+            "description": "El bot no está conectado a ningún canal de voz.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "stopped": {
+            "title": "Reproductor Detenido",
+            "description": "Se ha detenido la reproducción y limpiado la cola.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          }
         }
       },
       "settings": {
