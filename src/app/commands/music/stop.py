@@ -20,8 +20,16 @@ class Stop(commands.Cog):
             ))
             return
         player: wavelink.Player = ctx.voice_client
+        player.autoplay = wavelink.AutoPlayMode.disabled
 
-        player.queue.clear()
+        if player.queue is not None:
+            player.queue.clear()
+
+            if hasattr(player.queue, "history") and player.queue.history is not None:
+                try:
+                    player.queue.history.clear()
+                except AttributeError:
+                    pass
         await player.stop()
         await ctx.send(embed=await CustomEmbed.create(
                 ctx,
