@@ -3,8 +3,8 @@ import asyncio
 import wavelink
 from discord.ext import commands
 
+from src.helpers import metadata
 from src.helpers.embed import CustomEmbed
-from src.helpers.metadata import get_original_info
 
 
 class Queue(commands.Cog):
@@ -34,12 +34,17 @@ class Queue(commands.Cog):
             return
 
         tracks = list(player.queue)
-        urls = [track.uri for track in tracks]
-        info = await get_original_info(url=urls, track=track)
+
+        info = await asyncio.gather(*(
+            metadata.get_original_info(track.uri or "", track)
+            for track in tracks
+        ))
+
         message = "\n".join(
-            f"{index}. *{track.title}*"
-            for index, track in enumerate(tracks, start=1)
+            f"{index}. *{data.get('title', 'Título desconocido')}*"
+            for index, data in enumerate(info, start=1)
         )
+
         await ctx.send(embed=await CustomEmbed.create(
             ctx,
             key="app.commands.music.queue.list",

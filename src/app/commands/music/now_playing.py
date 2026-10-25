@@ -21,8 +21,10 @@ class NowPlaying(commands.Cog):
                 footer_icon=ctx.author.display_avatar.url
             ))
             return
+
         player: wavelink.Player = ctx.voice_client
         track = player.current
+
         if track is None:
             await ctx.send(embed=await CustomEmbed.create(
                 ctx,
@@ -31,17 +33,19 @@ class NowPlaying(commands.Cog):
                 footer_icon=ctx.author.display_avatar.url
             ))
             return
-        data = await get_original_info(str(track.uri), track)
+
+        data = await get_original_info(track.uri or "", track)
+
         await ctx.send(embed=await CustomEmbed.create(
             ctx,
             key="app.commands.music.now_playing.success",
             client=self.client,
-            thumbnail=data.get("thumbnail", None),
-            url=track.uri or data.get("uri") or "",
+            thumbnail=data.get("thumbnail"),
+            url=track.uri or "",
             title=data.get("title", "Título desconocido"),
             duration=format_duration(track.length),
             views=data.get("views", "N/A"),
             queue=player.queue.count,
-            user=ctx.author.author_name,
-            footer_icon=ctx.author.author_avatar
+            user=ctx.author.display_name,
+            footer_icon=ctx.author.display_avatar.url
         ))

@@ -13,15 +13,17 @@ class Leave(commands.Cog):
         if ctx.voice_client is None:
             await ctx.send(embed=await CustomEmbed.create(
                 ctx,
-                key="app.commands.music.leave.not_connected",
+                key="app.commands.music.embeds.leave.not_connected",
                 user=ctx.author.display_name,
                 footer_icon=ctx.author.display_avatar.url
             ))
             return
-        ctx.voice_client.disconnect()
+
+        await ctx.voice_client.disconnect()
+
         await ctx.send(embed=await CustomEmbed.create(
             ctx,
-            key="app.commands.music.leave.disconnected",
+            key="app.commands.music.embeds.leave.disconnected",
             user=ctx.author.display_name,
             footer_icon=ctx.author.display_avatar.url
         ))

@@ -214,6 +214,14 @@
           }
         },
         "now_playing": {
+          "not_connected": {
+            "title": "No conectado",
+            "description": "El bot no está conectado a ningún canal de voz."
+          },
+          "now_playing_empty": {
+            "title": "Sin reproducción",
+            "description": "No hay ninguna canción reproduciéndose actualmente."
+          },
           "success": {
             "title": "Ahora Suena",
             "fields": [
