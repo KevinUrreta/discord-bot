@@ -35,3 +35,12 @@ htmlcov/
 .vscode/
 .DS_Store
 Thumbs.db
+
+# Python packaging artifacts.
+build/
+dist/
+*.egg-info/
+
+# Test and coverage artifacts.
+.tox/
+.nox/
