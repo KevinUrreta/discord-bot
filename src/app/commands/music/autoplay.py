@@ -1,5 +1,5 @@
 from typing import cast
-import discord
+
 import wavelink
 from discord.ext import commands
 
@@ -20,7 +20,9 @@ class AutoplayCommand(commands.Cog):
 
         repo = GuildSettingsRepository(self.client.db)
         settings = await repo.read(guild.id)
-        current_mode = settings.autoplay if settings and settings.autoplay else "disabled"
+        if settings is None:
+            settings = await repo.create(guild_id=guild.id)
+        current_mode = settings.autoplay or "disabled"
 
         if mode is None:
             await ctx.send(embed=await CustomEmbed.create(

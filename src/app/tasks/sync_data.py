@@ -42,10 +42,11 @@ class SyncData(commands.Cog):
                         name=guild.name,
                         joined_at=guild_joined_at
                     )
-                    if await settings.read(guild.id) is None:
-                        await settings.create(guild_id=guild.id)
                 elif db_guild.name != guild.name or db_guild.joined_at != guild_joined_at:
                     await guilds.update(guild.id, name=guild.name, joined_at=guild_joined_at)
+
+                if await settings.read(guild.id) is None:
+                    await settings.create(guild_id=guild.id)
 
                 async for member in guild.fetch_members(limit=None):
                     active_members.add((guild.id, member.id))
