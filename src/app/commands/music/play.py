@@ -65,18 +65,14 @@ class Play(commands.Cog):
             ))
             return
 
-        if tracks is not None:
-            for t in tracks:
-                t.extras = {
-                    "author_name": ctx.author.display_name,
-                    "author_avatar": str(ctx.author.display_avatar.url)
-                }
+        if isinstance(tracks, wavelink.Playlist):
+            # tracks is a playlist...
 
             added: int = await player.queue.put_wait(tracks)
             await ctx.send(embed=await CustomEmbed.create(
                 ctx,
                 key="app.commands.music.play.playlist_added_to_queue",
-                title=playlist_title,
+                title=tracks.name,
                 queue=added,
                 user=ctx.author.display_name,
                 footer_icon=ctx.author.display_avatar.url
