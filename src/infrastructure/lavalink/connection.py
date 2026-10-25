@@ -2,30 +2,31 @@ import logging
 
 import wavelink
 
-from src.core.config import Settings
-
 logger = logging.getLogger("discord")
+
 
 class Lavalink:
 
     @staticmethod
-    async def connect_lavalink(bot):
+    async def connect_lavalink(client) -> None:
         if wavelink.Pool.nodes:
             return
 
-        settings = Settings()
+        settings = client.settings
 
         try:
+            # noinspection HttpUrlsUsage
             await wavelink.Pool.connect(
                 nodes=[
                     wavelink.Node(
                         identifier="main",
                         uri=f"http://{settings.lavalink_host}:{settings.lavalink_port}",
-                        password=settings.lavalink_password,
+                        password=settings.lavalink_password.get_secret_value(),
                     )
                 ],
-                client=bot,
+                client=client,
             )
             logger.info("Lavalink node connected successfully.")
-        except Exception as e:
-            logger.error(f"Error on connecting Lavalink: {e}")
+        except Exception:
+            logger.exception("Error connecting to Lavalink.")
+            raise

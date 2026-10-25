@@ -1,5 +1,7 @@
 from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from sqlalchemy import URL
+
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
@@ -13,7 +15,7 @@ class Settings(BaseSettings):
     log_file: str = "./logs/discord.log"
 
     lavalink_host: str
-    lavalink_password: str
+    lavalink_password: SecretStr
     lavalink_port: str
     lavalink_opus: str
 
@@ -24,10 +26,12 @@ class Settings(BaseSettings):
     postgres_port: str = "5432"
 
     @property
-    def postgres_url(self) -> str:
-        return str(
-            f"postgresql+asyncpg://"
-            f"{self.postgres_user}:{self.postgres_password.get_secret_value()}"
-            f"@{self.postgres_host}:{self.postgres_port}"
-            f"/{self.postgres_db}"
+    def postgres_url(self) -> URL:
+        return URL.create(
+            drivername="postgresql+asyncpg",
+            username=self.postgres_user,
+            password=self.postgres_password.get_secret_value(),
+            host=self.postgres_host,
+            port=int(self.postgres_port),
+            database=self.postgres_db,
         )

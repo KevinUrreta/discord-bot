@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from functools import wraps
 from typing import Any, ParamSpec, TypeVar
 
-from sqlalchemy import text
+from sqlalchemy import URL, text
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
 
@@ -27,7 +27,7 @@ class Base(DeclarativeBase):
 
 
 class Database:
-    def __init__(self, url: str) -> None:
+    def __init__(self, url: str | URL) -> None:
         self.engine = create_async_engine(url, pool_pre_ping=True)
         self.session_maker = async_sessionmaker(self.engine, expire_on_commit=False)
 
