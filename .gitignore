@@ -3,6 +3,7 @@ logs/
 
 # PostgreSQL
 postgres_data/
+*.dump
 
 # IDE
 .vscode/

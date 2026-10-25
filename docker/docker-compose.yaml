@@ -15,9 +15,8 @@ services:
       postgres:
         condition: service_healthy
 
-
   postgres:
-    image: postgres:latest
+    image: postgres:18
     container_name: postgres
     # environment:
     #   POSTGRES_DB: shop
@@ -43,7 +42,6 @@ services:
       timeout: 5s
       retries: 5
 
-
   lavalink:
     # pin the image version to Lavalink v4 and use the alpine variant for a smaller image size
     build:
@@ -53,7 +51,7 @@ services:
     restart: unless-stopped
     env_file:
       - ../.env
-    # environment:
+      # environment:
       # set Java options here (6GB heap size)
       # - JAVA_TOOL_OPTIONS=-Xmx2G
       # set lavalink server port
@@ -66,7 +64,7 @@ services:
       # persist plugins between restarts, make sure to create the folder & set the correct permissions and user/group id mentioned above
       - ./lavalink/plugins:/opt/Lavalink/plugins
       - ../logs:/opt/Lavalink/logs
-    # networks:
+      # networks:
       # - lavalink
     expose:
       # lavalink exposes port 2333 to connect to for other containers (this is for documentation purposes only)
