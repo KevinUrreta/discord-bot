@@ -10,8 +10,11 @@ from src.infrastructure.lavalink.connection import Lavalink
 class Client(commands.Bot):
     def __init__(self):
         self.db = Database(url=Settings().postgres_url)
-        super().__init__(command_prefix=get_prefix, intents=discord.Intents.all())
-
+        super().__init__(
+            command_prefix=get_prefix,
+            intents=discord.Intents.all(),
+            enable_debug_events=True,
+        )
 
     async def setup_hook(self) -> None:
         await self.db.create_tables()
