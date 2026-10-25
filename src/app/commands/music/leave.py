@@ -1,5 +1,7 @@
 from discord.ext import commands
 
+from src.helpers.embed import CustomEmbed
+
 
 class Leave(commands.Cog):
 
@@ -8,5 +10,18 @@ class Leave(commands.Cog):
 
     @commands.command(name="leave")
     async def leave(self, ctx):
-        if ctx.voice_client is not None:
-            ctx.voice_client.disconnect()
+        if ctx.voice_client is None:
+            await ctx.send(embed=await CustomEmbed.create(
+                ctx,
+                key="app.commands.music.leave.not_connected",
+                user=ctx.author.display_name,
+                footer_icon=ctx.author.display_avatar.url
+            ))
+            return
+        ctx.voice_client.disconnect()
+        await ctx.send(embed=await CustomEmbed.create(
+            ctx,
+            key="app.commands.music.leave.disconnected",
+            user=ctx.author.display_name,
+            footer_icon=ctx.author.display_avatar.url
+        ))

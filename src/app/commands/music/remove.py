@@ -1,6 +1,8 @@
 import wavelink
 from discord.ext import commands
 
+from src.helpers.embed import CustomEmbed
+
 
 class Remove(commands.Cog):
 
@@ -10,13 +12,39 @@ class Remove(commands.Cog):
     @commands.command(name="remove")
     async def remove(self, ctx, position: int):
         if ctx.voice_client is None:
+            await ctx.send(embed=await CustomEmbed.create(
+                ctx,
+                key="app.commands.music.remove.not_connected",
+                user=ctx.author.display_name,
+                footer_icon=ctx.author.display_avatar.url
+            ))
             return
         player: wavelink.Player = ctx.voice_client
         if player.queue.is_empty:
+            await ctx.send(embed=await CustomEmbed.create(
+                ctx,
+                key="app.commands.music.remove.queue_empty",
+                user=ctx.author.display_name,
+                footer_icon=ctx.author.display_avatar.url
+            ))
             return
 
-        playlist= list[wavelink.Playable](player.queue)
+        playlist = list[wavelink.Playable](player.queue)
         if position < 1 or position > len(playlist):
+            await ctx.send(embed=await CustomEmbed.create(
+                ctx,
+                key="app.commands.music.remove.invalid_position",
+                user=ctx.author.display_name,
+                footer_icon=ctx.author.display_avatar.url
+            ))
             return
-        player.queue.remove(playlist[position-1])
-        ctx.send("Removed {}".format(playlist[position-1]))
+        song = playlist[position-1]
+        player.queue.remove(song)
+
+        await ctx.send(embed=await CustomEmbed.create(
+            ctx,
+            key="app.commands.music.remove.success",
+            title=song.title,
+            user=ctx.author.display_name,
+            footer_icon=ctx.author.display_avatar.url
+        ))

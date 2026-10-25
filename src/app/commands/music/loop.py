@@ -1,7 +1,7 @@
 import wavelink
 from discord.ext import commands
 
-
+from src.helpers.embed import CustomEmbed
 
 
 class Loop(commands.Cog):
@@ -12,13 +12,39 @@ class Loop(commands.Cog):
     @commands.command(name="loop")
     async def loop(self, ctx):
         if ctx.voice_client is None:
+            await ctx.send(embed=await CustomEmbed.create(
+                ctx,
+                key="app.commands.music.loop.not_connected",
+                user=ctx.author.display_name,
+                footer_icon=ctx.author.display_avatar.url
+            ))
             return
         player: wavelink.Player = ctx.voice_client
 
         if not player.current:
+            await ctx.send(embed=await CustomEmbed.create(
+                ctx,
+                key="app.commands.music.loop.no_song_playing",
+                user=ctx.author.display_name,
+                footer_icon=ctx.author.display_avatar.url
+            ))
             return
         player.queue.mode = (
             wavelink.QueueMode.loop
             if player.queue.mode != wavelink.QueueMode.loop
             else wavelink.QueueMode.normal
         )
+        if player.queue.mode == wavelink.QueueMode.loop:
+            await ctx.send(embed=await CustomEmbed.create(
+                ctx,
+                key="app.commands.music.loop.enabled",
+                user=ctx.author.display_name,
+                footer_icon=ctx.author.display_avatar.url
+            ))
+        else:
+            await ctx.send(embed=await CustomEmbed.create(
+                ctx,
+                key="app.commands.music.loop.disabled",
+                user=ctx.author.display_name,
+                footer_icon=ctx.author.display_avatar.url
+            ))

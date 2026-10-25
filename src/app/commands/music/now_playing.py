@@ -1,6 +1,8 @@
 import wavelink
 from discord.ext import commands
 
+from src.helpers.embed import CustomEmbed
+from src.helpers.formatting import format_duration
 from src.helpers.metadata import get_original_info
 
 
@@ -9,13 +11,37 @@ class NowPlaying(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name="now_playing")
-    async def now_playing(self, ctx):
+    @commands.command(name="nowplaying", aliases=["now"])
+    async def nowplaying(self, ctx):
         if ctx.voice_client is None:
+            await ctx.send(embed=await CustomEmbed.create(
+                ctx,
+                key="app.commands.music.now_playing.not_connected",
+                user=ctx.author.display_name,
+                footer_icon=ctx.author.display_avatar.url
+            ))
             return
         player: wavelink.Player = ctx.voice_client
         track = player.current
         if track is None:
+            await ctx.send(embed=await CustomEmbed.create(
+                ctx,
+                key="app.commands.music.now_playing.now_playing_empty",
+                user=ctx.author.display_name,
+                footer_icon=ctx.author.display_avatar.url
+            ))
             return
-        info = await get_original_info(str(track.uri), track)
-        ctx.send("Now Playing: {}".format(info))
+        data = await get_original_info(str(track.uri), track)
+        await ctx.send(embed=await CustomEmbed.create(
+            ctx,
+            key="app.commands.music.now_playing.success",
+            client=self.client,
+            thumbnail=data.get("thumbnail", None),
+            url=track.uri or data.get("uri") or "",
+            title=data.get("title", "Título desconocido"),
+            duration=format_duration(track.length),
+            views=data.get("views", "N/A"),
+            queue=player.queue.count,
+            user=ctx.author.author_name,
+            footer_icon=ctx.author.author_avatar
+        ))
