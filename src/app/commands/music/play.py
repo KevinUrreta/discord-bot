@@ -1,14 +1,8 @@
-import asyncio
-from typing import cast
-from urllib.parse import urlsplit
-
-import discord
 import wavelink
 from discord.ext import commands
 
 from src.helpers import metadata
 from src.helpers.embed import CustomEmbed
-from src.helpers.formatting import format_duration
 
 
 class Play(commands.Cog):
@@ -31,12 +25,6 @@ class Play(commands.Cog):
         else:
             player: wavelink.Player = ctx.voice_client
 
-        # Turn on AutoPlay to enabled mode.
-        # enabled = AutoPlay will play songs for us and fetch recommendations...
-        # partial = AutoPlay will play songs for us, but WILL NOT fetch recommendations...
-        # disabled = AutoPlay will do nothing...
-        # player.autoplay = wavelink.AutoPlayMode.enabled
-
         # Lock the player to this channel...
         if not hasattr(player, "home"):
             setattr(player, "home", ctx.channel)
@@ -51,10 +39,10 @@ class Play(commands.Cog):
             ))
             return
 
-        if query.startswith("https://"):
-            tracks = await wavelink.Playable.search(query)
-        else:
-            tracks = await wavelink.Playable.search(query, source="ytsearch")
+        tracks = await wavelink.Playable.search(query) \
+            if query.startswith("https://") \
+            else await wavelink.Playable.search(query, source="ytsearch")
+
         if not tracks:
             await ctx.send(embed=await CustomEmbed.create(
                 ctx,
@@ -67,7 +55,6 @@ class Play(commands.Cog):
 
         if isinstance(tracks, wavelink.Playlist):
             # tracks is a playlist...
-
             added: int = await player.queue.put_wait(tracks)
             await ctx.send(embed=await CustomEmbed.create(
                 ctx,
