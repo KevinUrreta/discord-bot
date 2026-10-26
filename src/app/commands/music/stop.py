@@ -5,7 +5,6 @@ from src.helpers.embed import CustomEmbed
 
 
 class Stop(commands.Cog):
-
     def __init__(self, client):
         self.client = client
 
@@ -16,24 +15,23 @@ class Stop(commands.Cog):
                 ctx,
                 key="app.commands.music.stop.not_connected",
                 user=ctx.author.display_name,
-                footer_icon=ctx.author.display_avatar.url
+                footer_icon=ctx.author.display_avatar.url,
             ))
             return
+
         player: wavelink.Player = ctx.voice_client
+
         player.autoplay = wavelink.AutoPlayMode.disabled
 
-        if player.queue is not None:
-            player.queue.clear()
+        setattr(player, "stop_requested", player.current is not None)
 
-            if hasattr(player.queue, "history") and player.queue.history is not None:
-                try:
-                    player.queue.history.clear()
-                except AttributeError:
-                    pass
+        player.queue.reset()
+
         await player.stop()
+
         await ctx.send(embed=await CustomEmbed.create(
-                ctx,
-                key="app.commands.music.stop.stopped",
-                user=ctx.author.display_name,
-                footer_icon=ctx.author.display_avatar.url
-            ))
+            ctx,
+            key="app.commands.music.stop.stopped",
+            user=ctx.author.display_name,
+            footer_icon=ctx.author.display_avatar.url,
+        ))
