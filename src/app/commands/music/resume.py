@@ -31,7 +31,7 @@ class Resume(commands.Cog):
         await player.pause(False)
         await ctx.send(embed=await CustomEmbed.create(
             ctx,
-            key="app.commands.music.queue.success",
+            key="app.commands.music.resume.success",
             user=ctx.author.display_name,
             footer_icon=ctx.author.display_avatar.url
         ))

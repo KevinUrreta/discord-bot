@@ -31,7 +31,7 @@ class Clear(commands.Cog):
         player.queue.clear()
         await ctx.send(embed=await CustomEmbed.create(
             ctx,
-            key="app.commands.music.clear.cleared", # TODO:
+            key="app.commands.music.clear.cleared",
             user=ctx.author.display_name,
             footer_icon=ctx.author.display_avatar.url
         ))
