@@ -17,6 +17,8 @@ class Prefix(commands.Cog):
 
         repo = GuildSettingsRepository(self.client.db)
         settings = await repo.read(guild.id)
+        if settings is None:
+            settings = await repo.create(guild_id=guild.id)
         current = settings.prefix
 
         if prefix is None:
