@@ -13,7 +13,8 @@ class OnCommandError(commands.Cog):
     def __init__(self, client: commands.Bot) -> None:
         self.client = client
 
-    async def _send_error(self, ctx: commands.Context, key: str) -> None:
+    @staticmethod
+    async def _send_error(ctx: commands.Context, key: str) -> None:
         try:
             embed = await CustomEmbed.create(
                 ctx,
