@@ -453,6 +453,66 @@
         }
       }
     },
-    "tasks": {}
+    "tasks": {},
+    "errors": {
+      "command": {
+        "missing_argument": {
+          "title": "Falta un argumento",
+          "description": "Debes proporcionar todos los argumentos necesarios para ejecutar este comando.",
+          "footer": {
+            "text": "Pedido por: {user}"
+          }
+        },
+        "invalid_argument": {
+          "title": "Argumento no válido",
+          "description": "Uno de los argumentos proporcionados no tiene un formato o valor válido.",
+          "footer": {
+            "text": "Pedido por: {user}"
+          }
+        },
+        "missing_permissions": {
+          "title": "Permisos insuficientes",
+          "description": "No tienes los permisos necesarios para ejecutar este comando.",
+          "footer": {
+            "text": "Pedido por: {user}"
+          }
+        },
+        "bot_missing_permissions": {
+          "title": "Me faltan permisos",
+          "description": "No tengo los permisos necesarios para ejecutar este comando en este servidor.",
+          "footer": {
+            "text": "Pedido por: {user}"
+          }
+        },
+        "cooldown": {
+          "title": "Espera un momento",
+          "description": "Podrás volver a utilizar este comando dentro de **{seconds} segundos**.",
+          "footer": {
+            "text": "Pedido por: {user}"
+          }
+        },
+        "guild_only": {
+          "title": "Comando exclusivo de servidores",
+          "description": "Este comando solo se puede utilizar dentro de un servidor de Discord.",
+          "footer": {
+            "text": "Pedido por: {user}"
+          }
+        },
+        "check_failed": {
+          "title": "No se puede ejecutar el comando",
+          "description": "No se cumplen los requisitos necesarios para ejecutar este comando.",
+          "footer": {
+            "text": "Pedido por: {user}"
+          }
+        },
+        "unexpected": {
+          "title": "Error inesperado",
+          "description": "Ha ocurrido un error al ejecutar el comando. El problema se ha registrado para su revisión.",
+          "footer": {
+            "text": "Pedido por: {user}"
+          }
+        }
+      }
+    }
   }
 }

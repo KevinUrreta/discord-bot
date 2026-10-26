@@ -445,6 +445,66 @@
         }
       }
     },
-    "tasks": {}
+    "tasks": {},
+    "errors": {
+      "command": {
+        "missing_argument": {
+          "title": "Missing Argument",
+          "description": "You must provide all the required arguments to run this command.",
+          "footer": {
+            "text": "Requested by: {user}"
+          }
+        },
+        "invalid_argument": {
+          "title": "Invalid Argument",
+          "description": "One of the provided arguments has an invalid format or value.",
+          "footer": {
+            "text": "Requested by: {user}"
+          }
+        },
+        "missing_permissions": {
+          "title": "Insufficient Permissions",
+          "description": "You do not have the permissions required to run this command.",
+          "footer": {
+            "text": "Requested by: {user}"
+          }
+        },
+        "bot_missing_permissions": {
+          "title": "Missing Bot Permissions",
+          "description": "I do not have the permissions required to run this command in this server.",
+          "footer": {
+            "text": "Requested by: {user}"
+          }
+        },
+        "cooldown": {
+          "title": "Please Wait",
+          "description": "You can use this command again in **{seconds} seconds**.",
+          "footer": {
+            "text": "Requested by: {user}"
+          }
+        },
+        "guild_only": {
+          "title": "Server-Only Command",
+          "description": "This command can only be used inside a Discord server.",
+          "footer": {
+            "text": "Requested by: {user}"
+          }
+        },
+        "check_failed": {
+          "title": "Command Cannot Be Executed",
+          "description": "The requirements for running this command have not been met.",
+          "footer": {
+            "text": "Requested by: {user}"
+          }
+        },
+        "unexpected": {
+          "title": "Unexpected Error",
+          "description": "An error occurred while executing this command. The problem has been logged for review.",
+          "footer": {
+            "text": "Requested by: {user}"
+          }
+        }
+      }
+    }
   }
 }
