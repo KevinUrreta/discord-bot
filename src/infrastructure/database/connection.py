@@ -74,7 +74,6 @@ class Database:
 
     async def create_tables(self):
         try:
-            from src.infrastructure.database.models import GuildModel, GuildSettingsModel, UserModel, MemberModel
             async with self.engine.begin() as connection:
                 await connection.run_sync(lambda sync_conn: Base.metadata.create_all(bind=sync_conn))
 

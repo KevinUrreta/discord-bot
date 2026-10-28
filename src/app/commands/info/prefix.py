@@ -1,6 +1,7 @@
 from discord.ext import commands
 
 from src.app.client import Client
+from src.helpers import permissions
 from src.helpers.embed import CustomEmbed
 from src.infrastructure.database.repositories.guild_settings import GuildSettingsRepository
 
@@ -9,6 +10,7 @@ class Prefix(commands.Cog):
     def __init__(self, client: Client) -> None:
         self.client = client
 
+    @permissions.has_manage_guild()
     @commands.command(name="prefix")
     async def prefix(self, ctx: commands.Context, prefix: str | None = None) -> None:
         guild = ctx.guild

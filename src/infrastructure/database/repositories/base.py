@@ -39,6 +39,7 @@ class BaseRepository(Generic[ModelType]):
         if set(data) - columns or set(data) & primary:
             raise ValueError("Campo desconocido o clave primaria no modificable")
 
+        create_data: dict[Any, Any] = {}
         obj = await self.read_in_session(session, *keys)
         if obj is None:
             if len(primary) == 1:

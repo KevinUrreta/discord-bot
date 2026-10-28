@@ -21,8 +21,16 @@ async def get_original_info(url: str, track: wavelink.Playable) -> TrackMetadata
 
     info = await asyncio.to_thread(extract)
 
+    title: str = info.get("title") or "Unknown Title"
+    views: int = info.get("view_count") or 0
+    thumbnail: str = (
+        info.get("thumbnail")
+        or track.artwork
+        or "https://i.imgur.com/6X3Z1Qk.png"
+    )
+
     return {
-        "title": info.get("title", "Título desconocido"),
-        "views": info.get("view_count", 0),
-        "thumbnail": info.get("thumbnail") or track.artwork or f"https://youtube.com{track.identifier}/hqdefault.jpg"
+        "title": title,
+        "views": views,
+        "thumbnail": thumbnail
     }
