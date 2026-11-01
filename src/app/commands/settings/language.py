@@ -1,5 +1,7 @@
 from discord.ext import commands
 
+from src.core.exceptions import ManageGuildRequired
+from src.helpers import permissions
 from src.helpers.embed import CustomEmbed
 from src.i18n.translate import translator
 from src.infrastructure.database.repositories.guild_settings import GuildSettingsRepository
@@ -9,6 +11,7 @@ class Language(commands.Cog):
     def __init__(self, client):
         self.client = client
 
+    @permissions.has_manage_guild()
     @commands.command(name="language", aliases=["lang"])
     async def language(self, ctx: commands.Context, language: str | None = None) -> None:
         guild = ctx.guild
@@ -50,3 +53,14 @@ class Language(commands.Cog):
             language=normalized,
             footer_icon=ctx.author.display_avatar.url
         ))
+
+    async def cog_command_error(self, ctx, error):
+        if isinstance(error, commands.CommandInvokeError):
+            error = error.original
+        if isinstance(error, ManageGuildRequired):
+            await ctx.send(embed=await CustomEmbed.create(
+                ctx,
+                key="app.errors.command.missing_permissions",
+                user=ctx.author.display_name,
+                footer_icon=ctx.author.display_avatar.url
+            ))

@@ -10,19 +10,20 @@ logger = logging.getLogger("discord")
 
 
 class OnCommandError(commands.Cog):
+
     def __init__(self, client: commands.Bot) -> None:
         self.client = client
 
     @staticmethod
     async def _send_error(ctx: commands.Context, key: str) -> None:
         try:
-            embed = await CustomEmbed.create(
+
+            await ctx.send(embed=await CustomEmbed.create(
                 ctx,
                 key=key,
                 user=ctx.author.display_name,
                 footer_icon=ctx.author.display_avatar.url,
-            )
-            await ctx.send(embed=embed)
+            ))
         except (discord.HTTPException, ValueError, TypeError):
             logger.exception(
                 "Failed to send command error response for '%s'.",
@@ -30,12 +31,14 @@ class OnCommandError(commands.Cog):
             )
 
     @commands.Cog.listener()
-    async def on_command_error(self, ctx: commands.Context, error: commands.CommandError, ) -> None:
-        # Unknown commands are ignored to avoid unnecessary chat messages.
+    async def on_command_error(
+            self,
+            ctx: commands.Context,
+            error: commands.CommandError,
+    ) -> None:
         if isinstance(error, commands.CommandNotFound):
             return
 
-        # Discord.py wraps exceptions raised inside a command.
         if isinstance(error, commands.CommandInvokeError):
             original = error.original
             logger.error(
@@ -96,7 +99,6 @@ class OnCommandError(commands.Cog):
             await self._send_error(ctx, "app.errors.command.check_failed", )
             return
 
-        # Preserve visibility of any command errors not handled above.
         logger.error(
             "Unhandled command error in '%s': %s",
             ctx.command.qualified_name if ctx.command else "unknown",
