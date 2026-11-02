@@ -2,6 +2,15 @@
   "app": {
     "commands": {
       "info": {
+        "ping": {
+          "response": {
+            "title": "¡Pong!",
+            "description": "Latencia actual: **{latency} ms**.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          }
+        },
         "prefix": {
           "current_prefix": {
             "title": "Configuración de Prefijo",
@@ -13,6 +22,13 @@
           "set_prefix": {
             "title": "Prefijo Actualizado",
             "description": "El prefijo se ha modificado a **{prefix}**.",
+            "footer": {
+              "text": "Pedido por: {user}"
+            }
+          },
+          "invalid_prefix": {
+            "title": "Prefijo no válido",
+            "description": "El prefijo debe tener entre 1 y 10 caracteres.",
             "footer": {
               "text": "Pedido por: {user}"
             }
