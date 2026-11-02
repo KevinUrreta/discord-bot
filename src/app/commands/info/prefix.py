@@ -17,6 +17,15 @@ class Prefix(commands.Cog):
         if guild is None:
             return
 
+        if prefix is not None and not 1 <= len(prefix) <= 10:
+            await ctx.send(embed=await CustomEmbed.create(
+                ctx,
+                key="app.commands.info.prefix.invalid_prefix",
+                user=ctx.author.display_name,
+                footer_icon=ctx.author.display_avatar.url
+            ))
+            return
+
         repo = GuildSettingsRepository(self.client.db)
         settings = await repo.read(guild.id)
         if settings is None:
