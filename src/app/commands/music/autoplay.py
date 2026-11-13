@@ -5,15 +5,30 @@ from discord.ext import commands
 
 from src.app.client import Client
 from src.helpers.embed import CustomEmbed
-from src.infrastructure.database.repositories.guild_settings import GuildSettingsRepository
+from src.infrastructure.database.repositories.guild_settings import (
+    GuildSettingsRepository,
+)
 
 
 class AutoplayCommand(commands.Cog):
+    """Componente que gestiona el modo de reproducción automática en la música.
+
+    Permite a los usuarios activar o desactivar la reproducción automática de
+    pistas relacionadas en los servidores donde el bot está presente.
+
+    :param client: Instancia del cliente principal del bot.
+    """
+
     def __init__(self, client: Client) -> None:
         self.client = client
 
     @commands.command(name="autoplay")
     async def autoplay(self, ctx: commands.Context, mode: str | None = None):
+        """Muestra o cambia el modo de reproducción automática.
+
+        :param ctx: Contexto del comando de Discord.
+        :param mode: Modo de autoplay a activar.
+        """
         guild = ctx.guild
         if guild is None:
             return
@@ -25,13 +40,15 @@ class AutoplayCommand(commands.Cog):
         current_mode = settings.autoplay or "disabled"
 
         if mode is None:
-            await ctx.send(embed=await CustomEmbed.create(
-                ctx,
-                key="app.commands.music.autoplay.current",
-                mode=current_mode,
-                user=ctx.author.display_name,
-                footer_icon=ctx.author.display_avatar.url
-            ))
+            await ctx.send(
+                embed=await CustomEmbed.create(
+                    ctx,
+                    key="app.commands.music.autoplay.current",
+                    mode=current_mode,
+                    user=ctx.author.display_name,
+                    footer_icon=ctx.author.display_avatar.url,
+                )
+            )
             return
 
         mode_lower = mode.lower()
@@ -42,12 +59,14 @@ class AutoplayCommand(commands.Cog):
         elif mode_lower in ["false", "disabled", "off"]:
             new_mode = "disabled"
         else:
-            await ctx.send(embed=await CustomEmbed.create(
-                ctx,
-                key="app.commands.music.autoplay.invalid",
-                user=ctx.author.display_name,
-                footer_icon=ctx.author.display_avatar.url
-            ))
+            await ctx.send(
+                embed=await CustomEmbed.create(
+                    ctx,
+                    key="app.commands.music.autoplay.invalid",
+                    user=ctx.author.display_name,
+                    footer_icon=ctx.author.display_avatar.url,
+                )
+            )
             return
 
         await repo.update(guild.id, autoplay=new_mode)
@@ -61,10 +80,12 @@ class AutoplayCommand(commands.Cog):
             else:
                 player.autoplay = wavelink.AutoPlayMode.disabled
 
-        await ctx.send(embed=await CustomEmbed.create(
-            ctx,
-            key="app.commands.music.autoplay.updated",
-            mode=new_mode,
-            user=ctx.author.display_name,
-            footer_icon=ctx.author.display_avatar.url
-        ))
+        await ctx.send(
+            embed=await CustomEmbed.create(
+                ctx,
+                key="app.commands.music.autoplay.updated",
+                mode=new_mode,
+                user=ctx.author.display_name,
+                footer_icon=ctx.author.display_avatar.url,
+            )
+        )

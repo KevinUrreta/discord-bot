@@ -6,9 +6,19 @@ logger = logging.getLogger("discord")
 
 
 class Lavalink:
+    """Gestiona la conexión con el nodo Lavalink para reproducción de música.
+
+    Proporciona métodos para conectar el bot con el servidor Lavalink.
+    """
 
     @staticmethod
     async def connect_lavalink(client) -> None:
+        """Conecta el bot al servidor Lavalink.
+
+        Establece la conexión con el pool de nodos Lavalink usando la configuración.
+
+        :param client: Instancia del cliente principal del bot.
+        """
         if wavelink.Pool.nodes:
             return
 

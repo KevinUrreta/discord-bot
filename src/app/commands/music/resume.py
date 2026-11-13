@@ -5,33 +5,51 @@ from src.helpers.embed import CustomEmbed
 
 
 class Resume(commands.Cog):
+    """Componente que reanuda la reproducción de música en Discord.
+
+    Permite a los usuarios reanudar la reproducción tras haber sido pausada.
+
+    :param client: Instancia del cliente principal del bot.
+    """
 
     def __init__(self, client):
         self.client = client
 
     @commands.command(name="resume", aliases=["continue"])
     async def resume(self, ctx):
+        """Reanuda la reproducción de música pausada.
+
+        Continúa con la pista que estaba anteriormente pausada.
+
+        :param ctx: Contexto del comando de Discord.
+        """
         if ctx.voice_client is None:
-            await ctx.send(embed=await CustomEmbed.create(
-                ctx,
-                key="app.commands.music.resume.not_connected",
-                user=ctx.author.display_name,
-                footer_icon=ctx.author.display_avatar.url
-            ))
+            await ctx.send(
+                embed=await CustomEmbed.create(
+                    ctx,
+                    key="app.commands.music.resume.not_connected",
+                    user=ctx.author.display_name,
+                    footer_icon=ctx.author.display_avatar.url,
+                )
+            )
             return
         player: wavelink.Player = ctx.voice_client
         if not player.paused:
-            await ctx.send(embed=await CustomEmbed.create(
-                ctx,
-                key="app.commands.music.resume.no_song_playing",
-                user=ctx.author.display_name,
-                footer_icon=ctx.author.display_avatar.url
-            ))
+            await ctx.send(
+                embed=await CustomEmbed.create(
+                    ctx,
+                    key="app.commands.music.resume.no_song_playing",
+                    user=ctx.author.display_name,
+                    footer_icon=ctx.author.display_avatar.url,
+                )
+            )
             return
         await player.pause(False)
-        await ctx.send(embed=await CustomEmbed.create(
-            ctx,
-            key="app.commands.music.resume.success",
-            user=ctx.author.display_name,
-            footer_icon=ctx.author.display_avatar.url
-        ))
+        await ctx.send(
+            embed=await CustomEmbed.create(
+                ctx,
+                key="app.commands.music.resume.success",
+                user=ctx.author.display_name,
+                footer_icon=ctx.author.display_avatar.url,
+            )
+        )

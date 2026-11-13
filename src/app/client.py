@@ -13,6 +13,14 @@ logger = logging.getLogger("discord")
 
 
 class Client(commands.Bot):
+    """Cliente principal del bot, extendiendo la funcionalidad de commands.Bot.
+
+    Gestiona la conexión a la base de datos, la carga de módulos (Cogs)
+    y la integración con Lavalink.
+
+    :param settings: Configuración de la aplicación.
+    """
+
     def __init__(self, settings: Settings) -> None:
         self.settings = settings
         self.db = Database(url=settings.postgres_url)

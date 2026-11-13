@@ -5,7 +5,9 @@ from discord.ext import commands, tasks
 
 from src.app.client import Client
 from src.infrastructure.database.repositories.guild import GuildRepository
-from src.infrastructure.database.repositories.guild_settings import GuildSettingsRepository
+from src.infrastructure.database.repositories.guild_settings import (
+    GuildSettingsRepository,
+)
 from src.infrastructure.database.repositories.member import MemberRepository
 from src.infrastructure.database.repositories.user import UserRepository
 
@@ -13,6 +15,14 @@ logger = logging.getLogger("discord")
 
 
 class SyncData(commands.Cog):
+    """Componente que sincroniza la base de datos con el estado actual del bot.
+
+    Mantiene consistente la información de servidores, usuarios y miembros
+    entre la base de datos y el estado real en Discord.
+
+    :param client: Instancia del cliente principal del bot.
+    """
+
     def __init__(self, client: Client) -> None:
         self.client = client
         self.sync_db_loop.start()
@@ -22,6 +32,9 @@ class SyncData(commands.Cog):
 
     @tasks.loop(minutes=30)
     async def sync_db_loop(self) -> None:
+        """Sincroniza la base de datos con el estado actual para mantener
+        actualizada la información
+        """
         try:
             guilds = GuildRepository(self.client.db)
             settings = GuildSettingsRepository(self.client.db)
@@ -38,12 +51,14 @@ class SyncData(commands.Cog):
 
                 if db_guild is None:
                     await guilds.create(
-                        id=guild.id,
-                        name=guild.name,
-                        joined_at=guild_joined_at
+                        id=guild.id, name=guild.name, joined_at=guild_joined_at
                     )
-                elif db_guild.name != guild.name or db_guild.joined_at != guild_joined_at:
-                    await guilds.update(guild.id, name=guild.name, joined_at=guild_joined_at)
+                elif (
+                    db_guild.name != guild.name or db_guild.joined_at != guild_joined_at
+                ):
+                    await guilds.update(
+                        guild.id, name=guild.name, joined_at=guild_joined_at
+                    )
 
                 if await settings.read(guild.id) is None:
                     await settings.create(guild_id=guild.id)
@@ -56,14 +71,12 @@ class SyncData(commands.Cog):
                         await users.create(
                             id=member.id,
                             username=member.name,
-                            created_at=member.created_at
+                            created_at=member.created_at,
                         )
                     elif user.username != member.name:
                         await users.update(member.id, username=member.name)
 
-                    data: dict[str, str | datetime | None] = {
-                        "nickname": member.nick
-                    }
+                    data: dict[str, str | datetime | None] = {"nickname": member.nick}
 
                     if member.joined_at is not None:
                         data["joined_guild_at"] = member.joined_at
@@ -76,8 +89,7 @@ class SyncData(commands.Cog):
                             **data,
                         )
                     elif any(
-                            getattr(db_member, key) != value
-                            for key, value in data.items()
+                        getattr(db_member, key) != value for key, value in data.items()
                     ):
                         await members.update(guild.id, member.id, **data)
 
@@ -93,7 +105,9 @@ class SyncData(commands.Cog):
             logger.info("Sincronización completa finalizada.")
 
         except Exception as e:
-            logger.exception(f"Error durante la sincronización de la base de datos: {e}")
+            logger.exception(
+                f"Error durante la sincronización de la base de datos: {e}"
+            )
 
     @sync_db_loop.before_loop
     async def before_sync_db_loop(self) -> None:

@@ -1,19 +1,25 @@
 from discord.ext import commands
 
+
 class CheckFailure(commands.CheckFailure):
-    pass
+    """Excepción base para fallos en verificaciones de comandos."""
+
 
 class VoiceChannelRequired(CheckFailure):
-    pass
+    """Excepción lanzada cuando se requiere estar en un canal de voz."""
+
 
 class SameVoiceChannelRequired(CheckFailure):
-    pass
+    """Excepción lanzada cuando se requiere estar en el mismo canal de voz."""
+
 
 class ManageMessagesRequired(CheckFailure):
-    pass
+    """Excepción lanzada cuando se requiere permiso de gestionar mensajes."""
+
 
 class ManageGuildRequired(CheckFailure):
-    pass
+    """Excepción lanzada cuando se requiere permiso de gestionar servidor."""
+
 
 class NotPlaying(CheckFailure):
-    pass
+    """Excepción lanzada cuando no hay música reproduciéndose."""

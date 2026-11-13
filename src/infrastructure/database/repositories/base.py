@@ -8,7 +8,17 @@ from src.infrastructure.database.connection import Base, Database, with_session
 
 ModelType = TypeVar("ModelType", bound=Base)
 
+
 class BaseRepository(Generic[ModelType]):
+    """Repositorio base genérico para operaciones CRUD con SQLAlchemy.
+
+    Proporciona métodos comunes para listar, crear, leer, actualizar y eliminar
+    entidades persistentes en la base de datos.
+
+    :param model: Clase del modelo SQLAlchemy.
+    :param database: Instancia de la base de datos.
+    """
+
     def __init__(self, model: type[ModelType], database: Database) -> None:
         self.model = model
         self._db = database
@@ -31,7 +41,9 @@ class BaseRepository(Generic[ModelType]):
         return await session.get(self.model, key)
 
     @with_session
-    async def update(self, *keys: object, session: AsyncSession, **data: Any) -> ModelType | None:
+    async def update(
+        self, *keys: object, session: AsyncSession, **data: Any
+    ) -> ModelType | None:
         mapper = inspect(self.model)
         columns = {attr.key for attr in mapper.column_attrs}
         primary = {column.key for column in mapper.primary_key}
@@ -48,8 +60,12 @@ class BaseRepository(Generic[ModelType]):
                 create_data = {next(iter(primary)): keys[0], **data}
             else:
                 if len(keys) != len(primary):
-                    raise ValueError("Debes indicar todas las claves primarias del modelo")
-                create_data = {column.key: value for column, value in zip(mapper.primary_key, keys)}
+                    raise ValueError(
+                        "Debes indicar todas las claves primarias del modelo"
+                    )
+                create_data = {
+                    column.key: value for column, value in zip(mapper.primary_key, keys)
+                }
                 create_data.update(data)
 
             obj = self.model(**create_data)
@@ -62,7 +78,9 @@ class BaseRepository(Generic[ModelType]):
         await session.flush()
         return obj
 
-    async def read_in_session(self, session: AsyncSession, *keys: object) -> ModelType | None:
+    async def read_in_session(
+        self, session: AsyncSession, *keys: object
+    ) -> ModelType | None:
         key = keys[0] if len(keys) == 1 else tuple(keys)
         return await session.get(self.model, key)
 

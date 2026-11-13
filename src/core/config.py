@@ -4,11 +4,14 @@ from sqlalchemy import URL
 
 
 class Settings(BaseSettings):
+    """Configuración de la aplicación cargada desde variables de entorno.
+
+    Lee las credenciales y parámetros de conexión desde el archivo .env
+    y variables de entorno del sistema.
+    """
+
     model_config = SettingsConfigDict(
-        env_file=".env",
-        env_file_encoding="utf-8",
-        extra="ignore",
-        case_sensitive=False
+        env_file=".env", env_file_encoding="utf-8", extra="ignore", case_sensitive=False
     )
     discord_token: SecretStr
 
@@ -27,6 +30,12 @@ class Settings(BaseSettings):
 
     @property
     def postgres_url(self) -> URL:
+        """Construye la URL de conexión a PostgreSQL.
+
+        Devuelve una URL con los parámetros de conexión configurados.
+
+        :return: La URL de conexión PostgreSQL para asyncpg.
+        """
         return URL.create(
             drivername="postgresql+asyncpg",
             username=self.postgres_user,

@@ -7,17 +7,30 @@ from discord.ext import commands
 from src.helpers import metadata
 from src.helpers.embed import CustomEmbed
 from src.helpers.formatting import format_duration
-from src.infrastructure.database.repositories.guild_settings import GuildSettingsRepository
+from src.infrastructure.database.repositories.guild_settings import (
+    GuildSettingsRepository,
+)
 
 logger = logging.getLogger("discord")
 
 
 class OnWavelinkTracksStart(commands.Cog):
+    """Sincroniza el volumen y la reproducción automática con los ajustes del servidor y anuncia la pista actual.
+
+    :param client: Instancia del cliente principal del bot.
+    """
+
     def __init__(self, client):
         self.client = client
 
     @commands.Cog.listener()
-    async def on_wavelink_track_start(self, payload: wavelink.TrackStartEventPayload) -> None:
+    async def on_wavelink_track_start(
+        self, payload: wavelink.TrackStartEventPayload
+    ) -> None:
+        """Sincroniza los ajustes de música y anuncia la pista en reproducción en el canal asociado.
+
+        :param payload: Datos del evento de Wavelink asociados a la pista.
+        """
         player: wavelink.Player | None = payload.player
 
         if player is None:
@@ -33,9 +46,9 @@ class OnWavelinkTracksStart(commands.Cog):
 
         queue = player.queue
         if (
-                queue.mode == wavelink.QueueMode.loop
-                and queue.loaded is not None
-                and queue.loaded == payload.track
+            queue.mode == wavelink.QueueMode.loop
+            and queue.loaded is not None
+            and queue.loaded == payload.track
         ):
             return
 
@@ -46,7 +59,11 @@ class OnWavelinkTracksStart(commands.Cog):
             if settings and settings.volume is not None:
                 await player.set_volume(settings.volume)
 
-            autoplay_mode = settings.autoplay.lower() if settings and settings.autoplay else "disabled"
+            autoplay_mode = (
+                settings.autoplay.lower()
+                if settings and settings.autoplay
+                else "disabled"
+            )
 
             if autoplay_mode == "enabled":
                 player.autoplay = wavelink.AutoPlayMode.enabled
@@ -63,18 +80,22 @@ class OnWavelinkTracksStart(commands.Cog):
 
         track_extras = dict(track.extras)
         author_name = track_extras.get("author_name", self.client.user.name)
-        author_avatar = track_extras.get("author_avatar", self.client.user.display_avatar.url)
+        author_avatar = track_extras.get(
+            "author_avatar", self.client.user.display_avatar.url
+        )
 
-        await channel.send(embed=await CustomEmbed.create(
-            guild,
-            key="app.commands.music.play.now_playing",
-            client=self.client,
-            thumbnail=data.get("thumbnail"),
-            url=track.uri or data.get("uri") or "",
-            title=data.get("title", "Título desconocido"),
-            duration=format_duration(track.length),
-            views=data.get("views", "N/A"),
-            queue=player.queue.count,
-            user=author_name,
-            footer_icon=author_avatar,
-        ))
+        await channel.send(
+            embed=await CustomEmbed.create(
+                guild,
+                key="app.commands.music.play.now_playing",
+                client=self.client,
+                thumbnail=data.get("thumbnail"),
+                url=track.uri or data.get("uri") or "",
+                title=data.get("title", "Título desconocido"),
+                duration=format_duration(track.length),
+                views=data.get("views", "N/A"),
+                queue=player.queue.count,
+                user=author_name,
+                footer_icon=author_avatar,
+            )
+        )

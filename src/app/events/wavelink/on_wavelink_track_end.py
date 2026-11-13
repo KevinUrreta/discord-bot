@@ -12,11 +12,25 @@ logger = logging.getLogger("discord")
 
 
 class OnWavelinkTrackEnd(commands.Cog):
+    """Gestiona el fin de las pistas y la inactividad del reproductor.
+
+    Continúa la reproducción de la cola cuando corresponde y desconecta el
+    reproductor tras un periodo de inactividad, notificando al canal asociado.
+
+    :param client: Instancia del cliente principal del bot.
+    """
+
     def __init__(self, client):
         self.client = client
 
     @commands.Cog.listener()
-    async def on_wavelink_track_end(self, payload: wavelink.TrackEndEventPayload) -> None:
+    async def on_wavelink_track_end(
+        self, payload: wavelink.TrackEndEventPayload
+    ) -> None:
+        """Continúa la reproducción o desconecta al finalizar una pista.
+
+        :param payload: Datos del evento de finalización de pista de Wavelink.
+        """
         player: wavelink.Player | None = payload.player
 
         if player is None or player.channel is None:
@@ -42,12 +56,9 @@ class OnWavelinkTrackEnd(commands.Cog):
         stop_requested = getattr(player, "stop_requested", False)
 
         if stop_requested:
-            setattr(player, "stop_requested", False)
+            player.stop_requested = False
 
-        if (
-                not stop_requested
-                and player.autoplay != wavelink.AutoPlayMode.disabled
-        ):
+        if not stop_requested and player.autoplay != wavelink.AutoPlayMode.disabled:
             return
 
         queue = player.queue
@@ -70,21 +81,25 @@ class OnWavelinkTrackEnd(commands.Cog):
             await asyncio.sleep(DELAY)
 
             if (
-                    player.channel is None
-                    or player.playing
-                    or player.current is not None
-                    or not player.queue.is_empty
-                    or player.queue.mode != wavelink.QueueMode.normal
+                player.channel is None
+                or player.playing
+                or player.current is not None
+                or not player.queue.is_empty
+                or player.queue.mode != wavelink.QueueMode.normal
             ):
                 return
 
             await player.disconnect()
 
-            if text_channel is None or not isinstance(text_channel, discord.abc.Messageable):
+            if text_channel is None or not isinstance(
+                text_channel, discord.abc.Messageable
+            ):
                 return
 
-            await text_channel.send(embed=await CustomEmbed.create(
-                guild,
-                key="app.events.wavelink.idle_disconnect",
-                client=self.client,
-            ))
+            await text_channel.send(
+                embed=await CustomEmbed.create(
+                    guild,
+                    key="app.events.wavelink.idle_disconnect",
+                    client=self.client,
+                )
+            )

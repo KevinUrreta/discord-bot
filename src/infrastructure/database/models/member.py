@@ -1,7 +1,7 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import TYPE_CHECKING
 
-from sqlalchemy import BigInteger, ForeignKey, String, DateTime
+from sqlalchemy import BigInteger, DateTime, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.infrastructure.database.connection import Base
@@ -12,15 +12,24 @@ if TYPE_CHECKING:
 
 
 class MemberModel(Base):
+    """Modelo ORM para la tabla de miembros en servidores.
+
+    Representa la relación entre usuarios y servidores con información
+    adicional como apodo y fecha de unión al servidor.
+    """
+
     __tablename__ = "members"
 
-    guild_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("guilds.id", ondelete="CASCADE"), primary_key=True)
-    user_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("users.id", ondelete="CASCADE"), primary_key=True)
+    guild_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey("guilds.id", ondelete="CASCADE"), primary_key=True
+    )
+    user_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey("users.id", ondelete="CASCADE"), primary_key=True
+    )
 
     nickname: Mapped[str | None] = mapped_column(String(100), nullable=True)
     joined_guild_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True),
-        default=lambda: datetime.now(timezone.utc)
+        DateTime(timezone=True), default=lambda: datetime.now(UTC)
     )
 
     guild: Mapped["GuildModel"] = relationship(back_populates="members")

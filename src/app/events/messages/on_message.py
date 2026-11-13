@@ -7,11 +7,20 @@ logger = logging.getLogger("discord")
 
 
 class OnMessage(commands.Cog):
+    """Registra mensajes de servidores y los detalles de sus embeds; omite mensajes de bots y mensajes directos.
+
+    :param client: Instancia del cliente principal del bot.
+    """
+
     def __init__(self, client):
         self.client = client
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
+        """Registra mensajes de servidores y los detalles de sus embeds; omite los mensajes de bots y los mensajes directos.
+
+        :param message: Mensaje afectado por el evento.
+        """
         if message.author.bot or message.guild is None:
             return
 

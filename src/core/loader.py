@@ -1,13 +1,21 @@
 import importlib
+import logging
 from collections import defaultdict
 from pathlib import Path
-import logging
+
 from discord.ext import commands
 
 logger = logging.getLogger("discord")
 
 
-async def load_module(client):
+async def load_module(client) -> None:
+    """Carga dinámicamente los módulos de comandos, eventos y tareas.
+
+    Recorre las carpetas de la aplicación y carga todos los Cogs definidos
+    en los módulos Python encontrados.
+
+    :param client: Instancia del cliente de Discord para registrar los Cogs.
+    """
     base_path = Path(__file__).resolve().parent.parent
     categories = defaultdict(lambda: {"total": 0, "loaded": 0, "failed": []})
 
@@ -43,15 +51,21 @@ async def load_module(client):
                         categories[key]["loaded"] += 1
 
             except Exception as error:
-                categories[key]["failed"].append((file.name, type(error).__name__, error))
+                categories[key]["failed"].append(
+                    (file.name, type(error).__name__, error)
+                )
 
     for (cog_type, category), data in categories.items():
         label = cog_type.capitalize()
 
         if data["failed"]:
             for filename, error_type, error in data["failed"]:
-                logger.error(f"{label} | {category} | Error loading {filename} | {error_type}: {error}")
+                logger.error(
+                    f"{label} | {category} | Error loading {filename} | {error_type}: {error}"
+                )
             continue
 
         if data["loaded"] > 0:
-            logger.info(f"{label} | {category} | successfully loaded ({data['loaded']})")
+            logger.info(
+                f"{label} | {category} | successfully loaded ({data['loaded']})"
+            )
