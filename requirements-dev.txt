@@ -1,3 +1,4 @@
 pytest
 aiosqlite
 pytest-cov
+ruff

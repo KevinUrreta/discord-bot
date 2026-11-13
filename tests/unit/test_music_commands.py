@@ -5,6 +5,7 @@ from unittest.mock import AsyncMock, Mock
 import wavelink
 
 from src.app.commands.music.clear import Clear
+from src.app.commands.music.leave import Leave
 from src.app.commands.music.loop import Loop
 from src.app.commands.music.now_playing import NowPlaying
 from src.app.commands.music.pause import Pause
@@ -14,7 +15,6 @@ from src.app.commands.music.remove import Remove
 from src.app.commands.music.resume import Resume
 from src.app.commands.music.shuffle import Shuffle
 from src.app.commands.music.skip import Skip
-from src.app.commands.music.leave import Leave
 from src.helpers.embed import CustomEmbed
 
 
