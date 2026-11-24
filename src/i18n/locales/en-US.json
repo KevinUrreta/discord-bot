@@ -2,6 +2,24 @@
   "app": {
     "commands": {
       "info": {
+        "guild": {
+          "stats": {
+            "title": "Server Statistics",
+            "description": "**Server:** {guild_name} (ID: {guild_id})\n**Database Name:** {db_guild_name}\n**Registered Members:** {member_count}\n**Unique Users:** {user_count}\n**Prefix:** {prefix}\n**Language:** {language}\n**Volume:** {volume}\n**Autoplay:** {autoplay}\n**Oldest Member:** {oldest_name}",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          }
+        },
+        "members": {
+          "stats": {
+            "title": "Member Information",
+            "description": "**Registered Members on this Server:** {member_count}\n\n**Example Users:**\n{user_names}",
+            "footer": {
+              "text": "Requested by: {user}"
+            }
+          }
+        },
         "ping": {
           "response": {
             "title": "Pong!",
@@ -421,6 +439,24 @@
             "footer": {
               "text": "Requested by: {user}"
             }
+          }
+        }
+      },
+      "members": {
+        "info": {
+          "title": "Member Information",
+          "description": "Members registered in DB for this server: **{count}**\nExamples of users:\n{users}",
+          "footer": {
+            "text": "Requested by: {user}"
+          }
+        }
+      },
+      "guild": {
+        "stats": {
+          "title": "Server Statistics",
+          "description": "Server: {guild_name} (ID: {guild_id})\nMembers in BD: {member_count}\nUnique users in BD: {user_count}\nPrefix: {prefix}\nLanguage: {language}\nVolume: {volume}\nAutoplay: {autoplay}\nOldest member in BD: {oldest_name}\n\nTables used: guilds, guild_settings, members, users",
+          "footer": {
+            "text": "Requested by: {user}"
           }
         }
       },

@@ -2,6 +2,24 @@
   "app": {
     "commands": {
       "info": {
+        "guild": {
+          "stats": {
+            "title": "Estadísticas del servidor",
+            "description": "**Servidor:** {guild_name} (ID: {guild_id})\n**Nombre en BD:** {db_guild_name}\n**Miembros registrados:** {member_count}\n**Usuarios únicos:** {user_count}\n**Prefijo:** {prefix}\n**Idioma:** {language}\n**Volumen:** {volume}\n**Autoplay:** {autoplay}\n**Miembro más antiguo:** {oldest_name}",
+            "footer": {
+              "text": "Solicitado por: {user}"
+            }
+          }
+        },
+        "members": {
+          "stats": {
+            "title": "Información de miembros",
+            "description": "**Miembros registrados en este servidor:** {member_count}\n\n**Ejemplos de usuarios:**\n{user_names}",
+            "footer": {
+              "text": "Solicitado por: {user}"
+            }
+          }
+        },
         "ping": {
           "response": {
             "title": "¡Pong!",
@@ -454,6 +472,24 @@
             "footer": {
               "text": "Pedido por: {user}"
             }
+          }
+        }
+      },
+      "members": {
+        "info": {
+          "title": "Información de Miembros",
+          "description": "Miembros registrados en BD para este servidor: **{count}**\nEjemplos de usuarios:\n{users}",
+          "footer": {
+            "text": "Pedido por: {user}"
+          }
+        }
+      },
+      "guild": {
+        "stats": {
+          "title": "Estadísticas del Servidor",
+          "description": "Servidor: {guild_name} (ID: {guild_id})\nMiembros en BD: {member_count}\nUsuarios únicos en BD: {user_count}\nPrefijo: {prefix}\nIdioma: {language}\nVolumen: {volume}\nAutoplay: {autoplay}\nMiembro más antiguo en BD: {oldest_name}\n\nTablas usadas: guilds, guild_settings, members, users",
+          "footer": {
+            "text": "Pedido por: {user}"
           }
         }
       }

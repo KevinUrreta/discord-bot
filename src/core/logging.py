@@ -3,6 +3,7 @@ from pathlib import Path
 
 from src.core.config import Settings
 
+# noinspection argument-list
 settings = Settings()
 
 formatter = logging.Formatter(

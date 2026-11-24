@@ -6,6 +6,7 @@ from src.core.config import Settings
 
 
 async def main() -> None:
+    # noinspection argument-list
     settings = Settings()
 
     async with Client(settings) as client:
