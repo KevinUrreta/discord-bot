@@ -13,8 +13,11 @@ class Members(commands.Cog):
         self.client = client
 
     @commands.command(name="membersinfo")
-    async def membersinfo(self, ctx: commands.Context) -> None:
-        """Muestra estadísticas de miembros del servidor."""
+    async def members_info(self, ctx: commands.Context) -> None:
+        """Muestra estadísticas de miembros del servidor.
+
+        :param ctx: Contexto del comando de Discord.
+        """
 
         guild = ctx.guild
         if guild is None:

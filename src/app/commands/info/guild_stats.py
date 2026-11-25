@@ -13,14 +13,22 @@ from src.infrastructure.database.repositories.user import UserRepository
 
 
 class Server(commands.Cog):
-    """Componente que muestra estadísticas del servidor."""
+    """Componente que muestra características del servidor
+
+    Muestra las características de un servidor en concreto
+
+    :param client: Instancia del cliente principal del bot.
+    """
 
     def __init__(self, client: Client) -> None:
         self.client = client
 
     @commands.command(name="serverinfo")
     async def serverinfo(self, ctx: commands.Context) -> None:
-        """Muestra estadísticas del servidor."""
+        """Muestra estadísticas del servidor.
+
+        :param ctx: Contexto del comando de Discord.
+        """
 
         guild = ctx.guild
         if guild is None:
@@ -50,7 +58,7 @@ class Server(commands.Cog):
                 )
                 oldest_user = await users_repo.read(oldest_member.user_id)
                 oldest_name = oldest_user.username if oldest_user else "Desconocido"
-            except Exception:
+            except (ValueError, AttributeError):
                 oldest_name = "No disponible"
         else:
             oldest_name = "No disponible"
