@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from functools import wraps
 from typing import Any, ParamSpec, TypeVar
 
-from sqlalchemy import URL, text
+from sqlalchemy import URL
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
 
@@ -66,51 +66,15 @@ class Database:
             finally:
                 await session.close()
 
-    async def _ensure_postgres_columns(self) -> None:
-        required_columns = {
-            "guild_settings": [
-                ("autoplay", "VARCHAR(20) NOT NULL DEFAULT 'disabled'"),
-            ]
-        }
-
-        async with self.engine.begin() as connection:
-            for table_name, columns in required_columns.items():
-                for column_name, column_ddl in columns:
-                    exists = await connection.execute(
-                        text(
-                            """
-                            SELECT EXISTS (
-                                SELECT 1
-                                FROM information_schema.columns
-                                WHERE table_schema = 'public'
-                                  AND table_name = :table_name
-                                  AND column_name = :column_name
-                            )
-                            """
-                        ),
-                        {"table_name": table_name, "column_name": column_name},
-                    )
-                    if not exists.scalar():
-                        await connection.execute(
-                            text(
-                                f'ALTER TABLE "{table_name}" ADD COLUMN "{column_name}" {column_ddl}'
-                            )
-                        )
-
     async def create_tables(self):
         """Crea las tablas necesarias en la base de datos.
 
         Incluye migración de columnas faltantes para compatibilidad.
         """
-        try:
-            async with self.engine.begin() as connection:
-                await connection.run_sync(
-                    lambda sync_conn: Base.metadata.create_all(bind=sync_conn)
-                )
-
-            await self._ensure_postgres_columns()
-        except Exception:
-            raise
+        async with self.engine.begin() as connection:
+            await connection.run_sync(
+                lambda sync_conn: Base.metadata.create_all(bind=sync_conn)
+            )
 
     async def close(self) -> None:
         """Cierra la conexión a la base de datos.
