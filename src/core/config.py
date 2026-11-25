@@ -36,6 +36,10 @@ class Settings(BaseSettings):
 
         :return: La URL de conexión PostgreSQL para asyncpg.
         """
+        required = ["postgres_db", "postgres_user", "postgres_password"]
+        if not all(getattr(self, r) for r in required):
+            raise ValueError("Faltan credenciales de base de datos")
+
         return URL.create(
             drivername="postgresql+asyncpg",
             username=self.postgres_user,
