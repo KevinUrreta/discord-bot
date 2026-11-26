@@ -1,10 +1,7 @@
 import discord
 from discord.ext import commands
 
-from src.core.exceptions import (
-    ManageGuildRequired,
-    ManageMessagesRequired,
-)
+from src.core.exceptions import ManageGuildRequired, ManageMessagesRequired
 
 
 def has_manage_messages():

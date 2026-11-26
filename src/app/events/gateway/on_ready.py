@@ -16,6 +16,5 @@ class OnReady(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        """Registra que el bot se inicializó correctamente y está listo para operar.
-        """
+        """Registra que el bot se inicializó correctamente y está listo para operar."""
         logger.info("Bot initialized successfully and ready to operate")

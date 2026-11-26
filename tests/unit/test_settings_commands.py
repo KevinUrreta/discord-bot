@@ -115,9 +115,7 @@ def test_language_saves_supported_language(monkeypatch):
         async def update(self, guild_id, **values):
             updates.append((guild_id, values))
 
-    monkeypatch.setattr(
-        language_module, "GuildSettingsRepository", SettingsRepository
-    )
+    monkeypatch.setattr(language_module, "GuildSettingsRepository", SettingsRepository)
     monkeypatch.setattr(CustomEmbed, "create", make_embed)
     context = make_context()
     command = Language(SimpleNamespace(db=None))
@@ -143,9 +141,7 @@ def test_language_does_not_save_unsupported_language(monkeypatch):
         async def update(self, guild_id, **values):
             updates.append((guild_id, values))
 
-    monkeypatch.setattr(
-        language_module, "GuildSettingsRepository", SettingsRepository
-    )
+    monkeypatch.setattr(language_module, "GuildSettingsRepository", SettingsRepository)
     monkeypatch.setattr(CustomEmbed, "create", make_embed)
     context = make_context()
     command = Language(SimpleNamespace(db=None))
@@ -171,9 +167,7 @@ def test_volume_saves_value_and_updates_player(monkeypatch):
         async def update(self, guild_id, **values):
             updates.append((guild_id, values))
 
-    monkeypatch.setattr(
-        volume_module, "GuildSettingsRepository", SettingsRepository
-    )
+    monkeypatch.setattr(volume_module, "GuildSettingsRepository", SettingsRepository)
     monkeypatch.setattr(CustomEmbed, "create", make_embed)
     player = SimpleNamespace(set_volume=AsyncMock())
     context = make_context(player)
@@ -201,9 +195,7 @@ def test_volume_does_not_save_value_above_one_hundred(monkeypatch):
         async def update(self, guild_id, **values):
             updates.append((guild_id, values))
 
-    monkeypatch.setattr(
-        volume_module, "GuildSettingsRepository", SettingsRepository
-    )
+    monkeypatch.setattr(volume_module, "GuildSettingsRepository", SettingsRepository)
     monkeypatch.setattr(CustomEmbed, "create", make_embed)
     player = SimpleNamespace(set_volume=AsyncMock())
     context = make_context(player)
@@ -231,9 +223,7 @@ def test_autoplay_saves_mode_and_updates_player(monkeypatch):
         async def update(self, guild_id, **values):
             updates.append((guild_id, values))
 
-    monkeypatch.setattr(
-        autoplay_module, "GuildSettingsRepository", SettingsRepository
-    )
+    monkeypatch.setattr(autoplay_module, "GuildSettingsRepository", SettingsRepository)
     monkeypatch.setattr(CustomEmbed, "create", make_embed)
     player = SimpleNamespace(autoplay=None)
     context = make_context(player)
@@ -261,9 +251,7 @@ def test_autoplay_does_not_save_invalid_mode(monkeypatch):
         async def update(self, guild_id, **values):
             updates.append((guild_id, values))
 
-    monkeypatch.setattr(
-        autoplay_module, "GuildSettingsRepository", SettingsRepository
-    )
+    monkeypatch.setattr(autoplay_module, "GuildSettingsRepository", SettingsRepository)
     monkeypatch.setattr(CustomEmbed, "create", make_embed)
     context = make_context()
     command = AutoplayCommand(SimpleNamespace(db=None))

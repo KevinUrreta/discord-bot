@@ -16,6 +16,5 @@ class OnConnect(commands.Cog):
 
     @commands.Cog.listener()
     async def on_connect(self):
-        """Registra que se estableció correctamente la conexión con los servidores de Discord.
-        """
+        """Registra que se estableció correctamente la conexión con los servidores de Discord."""
         logger.info("Successful connection established with Discord servers")

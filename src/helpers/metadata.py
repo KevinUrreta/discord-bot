@@ -9,7 +9,7 @@ class TrackMetadata(TypedDict):
     """Metadatos de una pista de música extraídos desde YouTube."""
 
     title: str
-    views: str
+    views: int
     thumbnail: str
 
 

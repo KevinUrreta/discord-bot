@@ -37,9 +37,11 @@ class Play(commands.Cog):
                 )
                 return
 
-            player = await ctx.author.voice.channel.connect(cls=wavelink.Player)
+            player: wavelink.Player = await ctx.author.voice.channel.connect(
+                cls=wavelink.Player
+            )
         else:
-            player: wavelink.Player = ctx.voice_client
+            player = ctx.voice_client
 
         # Lock the player to this channel...
         if not hasattr(player, "home"):

@@ -2,3 +2,7 @@ pytest
 aiosqlite
 pytest-cov
 ruff
+black
+isort
+mypy
+pre-commit

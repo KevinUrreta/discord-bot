@@ -2,10 +2,17 @@ import importlib
 import logging
 from collections import defaultdict
 from pathlib import Path
+from typing import TypedDict
 
 from discord.ext import commands
 
 logger = logging.getLogger("discord")
+
+
+class LoadStats(TypedDict):
+    total: int
+    loaded: int
+    failed: list[tuple[str, str, Exception]]
 
 
 async def load_module(client) -> None:
@@ -17,7 +24,9 @@ async def load_module(client) -> None:
     :param client: Instancia del cliente de Discord para registrar los Cogs.
     """
     base_path = Path(__file__).resolve().parent.parent
-    categories = defaultdict(lambda: {"total": 0, "loaded": 0, "failed": []})
+    categories: dict[tuple[str, str], LoadStats] = defaultdict(
+        lambda: {"total": 0, "loaded": 0, "failed": []}
+    )
 
     for cog_type in ("commands", "events", "tasks"):
         cog_path = base_path / "app" / cog_type
@@ -30,7 +39,7 @@ async def load_module(client) -> None:
                 continue
 
             category = file.parent.name
-            key = (cog_type, category)
+            key: tuple[str, str] = (cog_type, category)
             categories[key]["total"] += 1
 
             relative_path = file.relative_to(base_path.parent)
@@ -59,9 +68,9 @@ async def load_module(client) -> None:
         label = cog_type.capitalize()
 
         if data["failed"]:
-            for filename, error_type, error in data["failed"]:
+            for filename, error_type, exc in data["failed"]:
                 logger.error(
-                    f"{label} | {category} | Error loading {filename} | {error_type}: {error}"
+                    f"{label} | {category} | Error loading {filename} | {error_type}: {exc}"
                 )
             continue
 

@@ -16,6 +16,5 @@ class OnDisconnect(commands.Cog):
 
     @commands.Cog.listener()
     async def on_disconnect(self):
-        """Registra que el bot se desconectó de Discord.
-        """
+        """Registra que el bot se desconectó de Discord."""
         logger.info("The bot has disconnected from Discord")

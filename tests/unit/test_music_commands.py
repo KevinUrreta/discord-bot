@@ -157,7 +157,9 @@ def test_leave_disconnects_player(monkeypatch):
     asyncio.run(Leave.leave.callback(Leave(None), context))
 
     player.disconnect.assert_awaited_once_with()
-    assert embed_mock.await_args.kwargs["key"] == "app.commands.music.leave.disconnected"
+    assert (
+        embed_mock.await_args.kwargs["key"] == "app.commands.music.leave.disconnected"
+    )
     context.send.assert_awaited_once_with(embed="test embed")
 
 
@@ -169,7 +171,9 @@ def test_leave_reports_when_not_connected(monkeypatch):
     asyncio.run(Leave.leave.callback(Leave(None), context))
 
     embed_mock.assert_awaited_once()
-    assert embed_mock.await_args.kwargs["key"] == "app.commands.music.leave.not_connected"
+    assert (
+        embed_mock.await_args.kwargs["key"] == "app.commands.music.leave.not_connected"
+    )
     context.send.assert_awaited_once_with(embed="test embed")
 
 
@@ -190,9 +194,7 @@ def test_queue_shows_track_titles(monkeypatch):
 
     asyncio.run(Queue.queue.callback(Queue(None), context))
 
-    assert embed_mock.await_args.kwargs["queue"] == (
-        "1. *Test song*"
-    )
+    assert embed_mock.await_args.kwargs["queue"] == ("1. *Test song*")
     context.send.assert_awaited_once_with(embed="test embed")
 
 
