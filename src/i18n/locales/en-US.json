@@ -271,6 +271,14 @@
                 "inline": true
               }
             ]
+          },
+          "not_connected": {
+            "title": "Not connected",
+            "description": "The bot is not connected to any voice channel."
+          },
+          "now_playing_empty": {
+            "title": "No playback",
+            "description": "No song is currently playing."
           }
         },
         "pause": {
